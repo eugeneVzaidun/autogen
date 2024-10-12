@@ -40,3 +40,12 @@ Thumbs.db
 
 .nx/cache
 .nx/workspace-data
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+# Environments
+.env
+
+.cache/

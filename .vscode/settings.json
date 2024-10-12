@@ -1,0 +1,7 @@
+{
+  "python.analysis.extraPaths": [
+    "apps/autogen-first/.venv/lib/python3.11/site-packages",
+  ],
+  "flake8.args": ["--max-line-length=120"],
+  "eslint.validate": ["json"]
+}
