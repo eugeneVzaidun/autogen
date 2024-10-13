@@ -1,6 +1,9 @@
 import os
 import autogen
 import gradio as gr
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
 
 
 # Function to load configuration from environment variables or a JSON file
@@ -40,8 +43,8 @@ def chatbot_reply(message, history):
     history.append({"role": "user", "content": message})
 
     try:
-        # Get the assistant's response
-        response = assistant.chat(message)
+        # Get the assistant's response using the correct method
+        response = assistant.initiate_chat(message)
     except Exception as e:
         response = f"Error: {str(e)}"
 
@@ -62,7 +65,7 @@ def reset_chat():
 
 
 # Define the Gradio interface
-with gr.Blocks(css=".gradio-container {background-color: #f0f0f0}") as demo:
+with gr.Blocks(fill_height=True) as demo:
     gr.Markdown("# 🧠 Simple AutoGen Q&A Chatbot")
     chatbot = gr.Chatbot(reset_chat, type="messages")
     with gr.Row():
@@ -81,4 +84,4 @@ with gr.Blocks(css=".gradio-container {background-color: #f0f0f0}") as demo:
     clear_button.click(reset_chat, inputs=None, outputs=[chatbot])
 
 if __name__ == "__main__":
-    demo.launch(share=True, server_name="0.0.0.0")
+    demo.launch(share=False, server_name="0.0.0.0")
