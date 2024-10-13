@@ -49,3 +49,4 @@ __pycache__/
 .env
 
 .cache/
+.gradio/
