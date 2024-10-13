@@ -65,10 +65,17 @@
         "cwd": "apps/autogen-first"
       }
     },
-    "run": {
+    "run:watch": {
       "executor": "@nxlv/python:run-commands",
       "options": {
         "command": "gradio main.py",
+        "cwd": "apps/autogen-first/autogen_first"
+      }
+    },
+    "run": {
+      "executor": "@nxlv/python:run-commands",
+      "options": {
+        "command": "poetry run python main.py",
         "cwd": "apps/autogen-first/autogen_first"
       }
     }

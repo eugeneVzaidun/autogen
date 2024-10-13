@@ -1,7 +1,6 @@
 import os
 import autogen
 import gradio as gr
-from autogen import AssistantAgent
 
 
 # Function to load configuration from environment variables or a JSON file
@@ -23,7 +22,7 @@ def load_config():
 
 # Initialize the Assistant Agent
 config_list = load_config()
-assistant = AssistantAgent(name="assistant", llm_config={"config_list": config_list})
+assistant = autogen.AssistantAgent(name="assistant", llm_config={"config_list": config_list})
 
 
 def chatbot_reply(message, history):
@@ -65,7 +64,7 @@ def reset_chat():
 # Define the Gradio interface
 with gr.Blocks(css=".gradio-container {background-color: #f0f0f0}") as demo:
     gr.Markdown("# 🧠 Simple AutoGen Q&A Chatbot")
-    chatbot = gr.Chatbot(reset_chat)
+    chatbot = gr.Chatbot(reset_chat, type="messages")
     with gr.Row():
         with gr.Column(scale=4):
             user_input = gr.Textbox(
