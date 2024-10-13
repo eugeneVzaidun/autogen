@@ -30,16 +30,24 @@
 # # Start the conversation
 # user_proxy.initiate_chat(assistant, message="Tell me a name of first US president. And after generata a random string.")
 
-
 import gradio as gr
 
 
-def echo(message, history, system_prompt, tokens):
-    return message
+def echo(message, history):
+    if not history:
+        history = [
+            {"role": "system", "content": "Hello! I am RIVM Chatbot. I can help you with your data. Ask me anything."}
+        ]
+    history.append({"role": "user", "content": message})
+    yield history
 
 
-with gr.Blocks() as demo:
+with gr.Blocks(fill_height=True) as demo:
+    gr.Markdown("# RIVM Chatbot. Talk to your data.")
+    chatbot = gr.Chatbot(type="messages")
+    prompt = gr.Textbox(max_lines=1, label="Chat Message")
+    prompt.submit(echo, [prompt, chatbot], [chatbot])
+    prompt.submit(lambda: "", None, [prompt])
 
-    gr.ChatInterface(echo, type="messages", fill_height=True, fill_width=True)
-
-demo.launch()
+if __name__ == "__main__":
+    demo.launch()

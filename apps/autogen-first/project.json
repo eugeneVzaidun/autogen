@@ -68,7 +68,7 @@
     "run": {
       "executor": "@nxlv/python:run-commands",
       "options": {
-        "command": "poetry run python main.py",
+        "command": "gradio main.py",
         "cwd": "apps/autogen-first/autogen_first"
       }
     }
