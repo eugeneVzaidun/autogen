@@ -1,53 +1,85 @@
-# import autogen
-# import random
-# import string
-
-
-# def generate_random_string(length=10):
-#     letters = string.ascii_letters + string.digits
-#     return "".join(random.choice(letters) for i in range(length))
-
-
-# # import OpenAI API key
-# config_list = autogen.config_list_from_json(env_or_file="OAI_CONFIG_LIST")
-
-# # create the assistant agent
-# assistant = autogen.AssistantAgent(name="assistant", llm_config={"config_list": config_list})
-
-
-# assistant.register_for_llm(
-#     name="generate_random_string",
-#     description="A tool to generate a random string.",
-# )(generate_random_string)
-
-# # Create the user proxy agent
-# user_proxy = autogen.UserProxyAgent(name="UserProxy", code_execution_config={"work_dir": "results"})
-
-# user_proxy.register_for_execution(
-#     name="generate_random_string",
-# )(generate_random_string)
-
-# # Start the conversation
-# user_proxy.initiate_chat(assistant, message="Tell me a name of first US president. And after generata a random string.")
-
+import os
+import autogen
 import gradio as gr
+from autogen import AssistantAgent
 
 
-def echo(message, history):
-    if not history:
-        history = [
-            {"role": "system", "content": "Hello! I am RIVM Chatbot. I can help you with your data. Ask me anything."}
+# Function to load configuration from environment variables or a JSON file
+def load_config():
+    config_list = autogen.config_list_from_json(env_or_file="OAI_CONFIG_LIST")
+    if not config_list:
+        # Fallback to environment variables if JSON is not provided
+        config_list = [
+            {
+                "api_key": os.environ.get("OPENAI_API_KEY", ""),
+                "api_base": os.environ.get("OPENAI_API_BASE", ""),
+                "api_type": os.environ.get("OPENAI_API_TYPE", "openai"),
+                "api_version": os.environ.get("OPENAI_API_VERSION", "v1"),
+                "model": os.environ.get("OPENAI_MODEL", "gpt-3.5-turbo"),
+            }
         ]
+    return config_list
+
+
+# Initialize the Assistant Agent
+config_list = load_config()
+assistant = AssistantAgent(name="assistant", llm_config={"config_list": config_list})
+
+
+def chatbot_reply(message, history):
+    """
+    Send the user message to the AssistantAgent and get the response.
+
+    Args:
+        message (str): The user's input message.
+        history (list): The chat history.
+
+    Returns:
+        tuple: Updated chat history with the assistant's reply.
+    """
+    # Append user message to history
     history.append({"role": "user", "content": message})
-    yield history
+
+    try:
+        # Get the assistant's response
+        response = assistant.chat(message)
+    except Exception as e:
+        response = f"Error: {str(e)}"
+
+    # Append assistant's response to history
+    history.append({"role": "assistant", "content": response})
+
+    return history
 
 
-with gr.Blocks(fill_height=True) as demo:
-    gr.Markdown("# RIVM Chatbot. Talk to your data.")
-    chatbot = gr.Chatbot(type="messages")
-    prompt = gr.Textbox(max_lines=1, label="Chat Message")
-    prompt.submit(echo, [prompt, chatbot], [chatbot])
-    prompt.submit(lambda: "", None, [prompt])
+def reset_chat():
+    """
+    Reset the chat history to its initial state.
+
+    Returns:
+        list: Initial chat history with a system message.
+    """
+    return [{"role": "system", "content": "Hello! I am your helpful assistant. How can I help you today?"}]
+
+
+# Define the Gradio interface
+with gr.Blocks(css=".gradio-container {background-color: #f0f0f0}") as demo:
+    gr.Markdown("# 🧠 Simple AutoGen Q&A Chatbot")
+    chatbot = gr.Chatbot(reset_chat)
+    with gr.Row():
+        with gr.Column(scale=4):
+            user_input = gr.Textbox(
+                show_label=False,
+                placeholder="Type your question here...",
+            )
+        with gr.Column(scale=1):
+            send_button = gr.Button("Send")
+    clear_button = gr.Button("Clear Chat")
+
+    # Define interactions
+    send_button.click(chatbot_reply, inputs=[user_input, chatbot], outputs=[chatbot])
+    user_input.submit(chatbot_reply, inputs=[user_input, chatbot], outputs=[chatbot])
+    clear_button.click(reset_chat, inputs=None, outputs=[chatbot])
 
 if __name__ == "__main__":
-    demo.launch()
+    demo.launch(share=True, server_name="0.0.0.0")
