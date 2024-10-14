@@ -1,5 +1,5 @@
 {
-  "name": "chat",
+  "name": "chat-frontend",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/frontend/src",
   "projectType": "application",
