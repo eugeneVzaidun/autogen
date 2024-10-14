@@ -1,14 +1,14 @@
 {
   "name": "chat-frontend",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/frontend/src",
+  "sourceRoot": "packages/chat-frontend/src",
   "projectType": "application",
   "tags": [],
   "targets": {
     "build": {
       "defaultConfiguration": "production",
       "options": {
-        "cwd": "packages/frontend",
+        "cwd": "packages/chat-frontend",
         "command": "vite build"
       },
       "cache": true,
@@ -25,7 +25,7 @@
         }
       ],
       "outputs": [
-        "{workspaceRoot}/dist/packages/frontend"
+        "{workspaceRoot}/dist/packages/chat-frontend"
       ],
       "metadata": {
         "technologies": [

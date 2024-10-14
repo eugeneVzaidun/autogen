@@ -6,7 +6,7 @@ import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
 
 export default defineConfig({
   root: __dirname,
-  cacheDir: '../../node_modules/.vite/packages/frontend',
+  cacheDir: '../../node_modules/.vite/packages/chat-frontend',
 
   server: {
     port: 4200,
@@ -26,7 +26,7 @@ export default defineConfig({
   // },
 
   build: {
-    outDir: '../../dist/packages/frontend',
+    outDir: '../../dist/packages/chat-frontend',
     emptyOutDir: true,
     reportCompressedSize: true,
     commonjsOptions: {

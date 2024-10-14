@@ -5,7 +5,7 @@ FROM nginx:latest
 RUN rm -rf /usr/share/nginx/html/*
 
 # Copy your static website files from the dist folder to Nginx's html directory
-COPY ./dist/packages/frontend /usr/share/nginx/html/
+COPY ./dist/packages/chat-frontend /usr/share/nginx/html/
 
 # (Optional) If you have a custom Nginx configuration, copy it
 # COPY nginx.conf /etc/nginx/nginx.conf
