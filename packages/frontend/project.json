@@ -50,7 +50,7 @@
       },
       "parallelism": true
     },
-    "container": {
+    "container:build": {
       "configurations": {
         "container": {
           
@@ -74,6 +74,7 @@
       }
     },
     "container:run": {
+      "dependsOn": ["container:build:container"],
       "executor": "nx:run-commands",
       "options": {
         "commands": ["docker run -p 4200:80 chat-frontend:main"]

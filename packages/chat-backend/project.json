@@ -3,6 +3,12 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "packages/chat-backend/chat_backend",
+  "release": {
+    "version": {
+      "generator": "@nxlv/python:release-version"
+    }
+  },
+  "tags": [],
   "targets": {
     "lock": {
       "executor": "@nxlv/python:run-commands",
@@ -67,12 +73,31 @@
         "command": "poetry run python chat_backend/main.py",
         "cwd": "packages/chat-backend"
       }
-    }
-  },
-  "tags": [],
-  "release": {
-    "version": {
-      "generator": "@nxlv/python:release-version"
+    },
+    "container:build": {
+      "executor": "@nx-tools/nx-container:build",
+      "dependsOn": ["build"],
+      "options": {
+        "engine": "docker",
+        "metadata": {
+          "images": ["chat-backend"],
+          "load": true,
+          "tags": [
+            "type=schedule",
+            "type=ref,event=branch",
+            "type=ref,event=tag",
+            "type=ref,event=pr",
+            "type=sha,prefix=sha-"
+          ]
+        }
+      }
+    },
+    "container:run": {
+      "dependsOn": ["container:build"],
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["docker run -p 8000:8000 chat-backend:main"]
+      }
     }
   }
 }
