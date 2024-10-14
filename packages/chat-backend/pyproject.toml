@@ -17,6 +17,7 @@ readme = 'README.md'
   pyautogen = "^0.3.1"
   uvicorn = {extras = ["standard"], version = "^0.31.1"}
   fastapi = "^0.115.2"
+  flaml = {extras = ["automl"], version = "^2.3.1"}
 
   [tool.poetry.group.dev.dependencies]
   autopep8 = "2.0.2"
