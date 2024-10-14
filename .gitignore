@@ -40,4 +40,7 @@ Thumbs.db
 
 .nx/cache
 .nx/workspace-data
+.cache
 .cache/
+__pycache__
+__pycache__/
