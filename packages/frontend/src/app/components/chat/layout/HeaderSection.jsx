@@ -12,10 +12,8 @@ import Typography from '@mui/material/Typography';
 import { Outlet } from 'react-router-dom';
 import {
     useNavigate,
-    useLocation
   } from 'react-router-dom';
 
-const lightColor = 'rgba(255, 255, 255, 0.7)';
 
 function LinkTab(props) {
     const navigate = useNavigate();

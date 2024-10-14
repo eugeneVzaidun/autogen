@@ -36,7 +36,7 @@ function CustomizedInputBase() {
     }, []);
 
     const clickHandler = async (e) => {
-        if (message.trim().length == 0)
+        if (message.trim().length === 0)
             return 
         setMessage("")
         sendChatMessageAsync(message)

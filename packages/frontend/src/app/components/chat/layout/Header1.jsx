@@ -12,32 +12,30 @@ function Header1(props) {
   const { onDrawerToggle } = props;
 
   return (
-    <React.Fragment>
-      <AppBar color="primary" position="sticky" elevation={0}>
-        <Toolbar>
-          <Grid container spacing={1} alignItems="center">
-            <Grid sx={{ display: { sm: 'none', xs: 'block' } }} item>
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                onClick={onDrawerToggle}
-                edge="start"
-              >
-                <MenuIcon />
-              </IconButton>
-            </Grid>
-            <Grid item xs />
-            <Grid item>
-              <Tooltip title="Alerts • No alerts">
-                <IconButton color="inherit">
-                  <NotificationsNoneOutlinedIcon />
-                </IconButton>
-              </Tooltip>
-            </Grid>
+    <AppBar color="primary" position="sticky" elevation={0}>
+      <Toolbar>
+        <Grid container spacing={1} alignItems="center">
+          <Grid sx={{ display: { sm: 'none', xs: 'block' } }} item>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={onDrawerToggle}
+              edge="start"
+            >
+              <MenuIcon />
+            </IconButton>
           </Grid>
-        </Toolbar>
-      </AppBar>
-    </React.Fragment>
+          <Grid item xs />
+          <Grid item>
+            <Tooltip title="Alerts • No alerts">
+              <IconButton color="inherit">
+                <NotificationsNoneOutlinedIcon />
+              </IconButton>
+            </Tooltip>
+          </Grid>
+        </Grid>
+      </Toolbar>
+    </AppBar>
   );
 }
 
