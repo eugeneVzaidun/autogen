@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chart-backend
+  labels:
+    app: chart-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chart-backend
+  template:
+    metadata:
+      labels:
+        app: chart-backend
+    spec:
+      containers:
+      - name: chart-backend
+        image: chart-backend:main # kpt-set: ${backend.image}
+        ports:
+        - containerPort: 80

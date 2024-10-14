@@ -1,0 +1,45 @@
+{
+  "name": "infrastructure",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/infrastructure",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "mesh:install": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "istioctl install -f operator.yaml -y",
+        "cwd": "packages/infrastructure/mesh_operator"
+      }
+    },
+    "mesh:uninstall": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "istioctl uninstall --purge -y",
+        "cwd": "packages/infrastructure/mesh_operator"
+      }
+    },
+    "root_package:render": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "kpt fn render",
+        "cwd": "packages/infrastructure/root_package"
+      }
+    },
+    "root_package:apply": {
+      "dependsOn": ["root_package:render"],
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "kpt live apply",
+        "cwd": "packages/infrastructure/root_package"
+      }
+    },
+    "root_package:destroy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "kpt live destroy",
+        "cwd": "packages/infrastructure/root_package"
+      }
+    }
+  }
+}
