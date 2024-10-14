@@ -4,6 +4,80 @@
   "sourceRoot": "packages/frontend/src",
   "projectType": "application",
   "tags": [],
-  "// targets": "to see all targets run: nx show project chat --web",
-  "targets": {}
+  "targets": {
+    "build": {
+      "defaultConfiguration": "production",
+      "options": {
+        "cwd": "packages/frontend",
+        "command": "vite build"
+      },
+      "cache": true,
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "default",
+        "^default",
+        {
+          "externalDependencies": [
+            "vite"
+          ]
+        }
+      ],
+      "outputs": [
+        "{workspaceRoot}/dist/packages/frontend"
+      ],
+      "metadata": {
+        "technologies": [
+          "vite"
+        ],
+        "description": "Run Vite build",
+        "help": {
+          "command": "npx vite build --help",
+          "example": {
+            "options": {
+              "sourcemap": true,
+              "manifest": "manifest.json"
+            }
+          }
+        }
+      },
+      "executor": "nx:run-commands",
+      "configurations": {
+        "container": {
+
+        }
+      },
+      "parallelism": true
+    },
+    "container": {
+      "configurations": {
+        "container": {
+          
+        }
+      },
+      "executor": "@nx-tools/nx-container:build",
+      "dependsOn": ["build"],
+      "options": {
+        "engine": "docker",
+        "metadata": {
+          "images": ["chat-frontend"],
+          "load": true,
+          "tags": [
+            "type=schedule",
+            "type=ref,event=branch",
+            "type=ref,event=tag",
+            "type=ref,event=pr",
+            "type=sha,prefix=sha-"
+          ]
+        }
+      }
+    },
+    "container:run": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["docker run -p 4200:80 chat-frontend:main"]
+      }
+    }
+  }
 }
