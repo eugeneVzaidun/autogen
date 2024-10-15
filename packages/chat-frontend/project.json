@@ -44,17 +44,21 @@
       },
       "executor": "nx:run-commands",
       "configurations": {
-        "container": {
+        "docker": {
 
+        },
+        "k8s": {
+          
         }
       },
       "parallelism": true
     },
     "container:build": {
       "configurations": {
-        "container": {
+        "k8s": {
           
-        }
+        },
+        "docker": {}
       },
       "executor": "@nx-tools/nx-container:build",
       "dependsOn": ["build"],
