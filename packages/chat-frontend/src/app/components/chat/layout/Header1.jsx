@@ -28,7 +28,7 @@ function Header1(props) {
           </Grid>
           <Grid item>
             <Typography variant="h6" color="inherit" noWrap>
-              RIVM Autogen Chat
+              RIVM Autogen Chat Interface - Demo
             </Typography>
           </Grid>
           <Grid item xs />
