@@ -34,7 +34,10 @@
       } 
     },
     "root_package:apply": {
-      "dependsOn": ["root_package:init", "root_package:render"],
+      "dependsOn": [
+        "root_package:init", 
+        "root_package:render"
+      ],
       "executor": "nx:run-commands",
       "options": {
         "command": "kpt live apply --output=table",
