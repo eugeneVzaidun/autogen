@@ -26,8 +26,15 @@
         "cwd": "packages/infrastructure/root_package"
       }
     },
+    "root_package:init": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "if [ ! -f resourcegroup.yaml ]; then kpt live init; fi",
+        "cwd": "packages/infrastructure/root_package"
+      } 
+    },
     "root_package:apply": {
-      "dependsOn": ["root_package:render"],
+      "dependsOn": ["root_package:init", "root_package:render"],
       "executor": "nx:run-commands",
       "options": {
         "command": "kpt live apply",
@@ -35,6 +42,7 @@
       }
     },
     "root_package:destroy": {
+      "dependsOn": ["root_package:init"],
       "executor": "nx:run-commands",
       "options": {
         "command": "kpt live destroy",
