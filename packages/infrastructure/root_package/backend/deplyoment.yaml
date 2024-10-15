@@ -1,21 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: chart-frontend-deployment
+  name: chat-frontend
   labels:
-    app: chart-frontend
+    app: chat-frontend
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: chart-frontend
+      app: chat-frontend
   template:
     metadata:
       labels:
-        app: chart-frontend
+        app: chat-frontend
     spec:
       containers:
-      - name: chart-frontend
+      - name: chat-frontend
         image: chat-frontend:main # kpt-set: ${frontend.image}
         ports:
         - containerPort: 80
+        resources:
