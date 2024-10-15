@@ -4,11 +4,11 @@ import asyncio
 
 config_list = [
     {
-        "model": "gpt-3.5-turbo",
+        "model": "gpt-4o",
     }
 ]
 llm_config_assistant = {
-    "model": "gpt-3.5-turbo",
+    "model": "gpt-4o",
     "temperature": 0,
     "config_list": config_list,
     "functions": [
@@ -33,7 +33,7 @@ llm_config_assistant = {
     ],
 }
 llm_config_proxy = {
-    "model": "gpt-3.5-turbo-0613",
+    "model": "gpt-4o",
     "temperature": 0,
     "config_list": config_list,
 }
@@ -71,6 +71,5 @@ class AutogenChat:
     async def start(self, message):
         await self.user_proxy.a_initiate_chat(self.assistant, clear_history=True, message=message)
 
-    # MOCH Function call
     def search_db(self, order_number=None, customer_number=None):
         return "Order status: delivered TERMINATE"

@@ -5,16 +5,16 @@ import asyncio
 
 config_list = [
     {
-        "model": "gpt-3.5-turbo",
+        "model": "gpt-4o",
     }
 ]
 llm_config_assistant = {
-    "model": "gpt-3.5-turbo",
+    "model": "gpt-4o",
     "temperature": 0,
     "config_list": config_list,
 }
 llm_config_proxy = {
-    "model": "gpt-3.5-turbo-0613",
+    "model": "gpt-4o",
     "temperature": 0,
     "config_list": config_list,
 }
