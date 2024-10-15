@@ -7,6 +7,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import Toolbar from '@mui/material/Toolbar';
 import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography'; // Import Typography
 
 function Header1(props) {
   const { onDrawerToggle } = props;
@@ -24,6 +25,11 @@ function Header1(props) {
             >
               <MenuIcon />
             </IconButton>
+          </Grid>
+          <Grid item>
+            <Typography variant="h6" color="inherit" noWrap>
+              RIVM Autogen Chat
+            </Typography>
           </Grid>
           <Grid item xs />
           <Grid item>

@@ -34,7 +34,7 @@ export default function Chat() {
     return (
       <Box sx={{ display: 'flex', minHeight: '100vh' }}>
         <CssBaseline />
-        <Box
+        {/* <Box
           component="nav"
           sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
         >
@@ -51,7 +51,7 @@ export default function Chat() {
             PaperProps={{ style: { width: drawerWidth } }}
             sx={{ display: { sm: 'block', xs: 'none' } }}
           />
-        </Box>
+        </Box> */}
         <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
           <Header1 onDrawerToggle={handleDrawerToggle} />
           <ChatDialog />

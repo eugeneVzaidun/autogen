@@ -65,7 +65,7 @@ function HeaderSection(props) {
             ))}
             </Tabs>
         </AppBar>
-        <Box component="main" sx={{ flex: 1, py: 3, px: 3, bgcolor: '#eaeff1' }}>
+        <Box component="main" sx={{ flex: 1, py: 3, px: 3, bgcolor: '#cce0f0' }}>
             <Outlet />
         </Box>
 

@@ -3,12 +3,13 @@ import { createTheme } from '@mui/material/styles';
 let theme = createTheme({
     palette: {
       primary: {
-        light: '#63ccff',
-        main: '#009be5',
-        dark: '#006db3',
+        light: '#cce0f0',
+        main: '#00689b',
+        dark: '#00689b',
       },
     },
     typography: {
+      fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
       h5: {
         fontWeight: 500,
         fontSize: 26,
@@ -38,7 +39,7 @@ let theme = createTheme({
       MuiDrawer: {
         styleOverrides: {
           paper: {
-            backgroundColor: '#081627',
+            backgroundColor: '#cce0f0',
           },
         },
       },

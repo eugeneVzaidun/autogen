@@ -11,7 +11,7 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import { useBoundStore } from '../../../stores';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import CycloneIcon from '@mui/icons-material/Cyclone';
+import RocketIcon from '@mui/icons-material/RocketLaunch';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -103,10 +103,10 @@ const ChatDialog = () => {
                         <Fragment key={id}>
                             <Grid  item xs={1} sx={{ borderTop:"1px solid #2222", alignItem:"center", justifyContent: "center", display:"flex"   }}>
                                 {(msg_from === "user") &&
-                                    <AccountCircleIcon  style={{marginTop:"10px", color:"darkgray"}}/>
+                                    <AccountCircleIcon  style={{marginTop:"10px", color:"#00689b"}}/>
                                 }
                                 {(msg_from === "gpt") &&
-                                    <CycloneIcon  style={{marginTop:"10px", color:"darkgray"}}/>
+                                    <RocketIcon  style={{marginTop:"10px", color:"#00689b"}}/>
                                 }
                                 </Grid>
                             <Grid  item xs={11} sx={{  borderTop:"1px solid #2222"  }}>
