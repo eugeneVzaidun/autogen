@@ -19,24 +19,24 @@
         "cwd": "packages/infrastructure/mesh_operator"
       }
     },
-    "root_package:render": {
+    "root_package_apps:render": {
       "executor": "nx:run-commands",
       "options": {
         "command": "kpt fn render",
         "cwd": "packages/infrastructure/root_package_apps"
       }
     },
-    "root_package:init": {
+    "root_package_apps:init": {
       "executor": "nx:run-commands",
       "options": {
         "command": "if [ ! -f resourcegroup.yaml ]; then kpt live init; fi",
         "cwd": "packages/infrastructure/root_package_apps"
       } 
     },
-    "root_package:apply": {
+    "root_package_apps:apply": {
       "dependsOn": [
-        "root_package:init", 
-        "root_package:render"
+        "root_package_apps:init", 
+        "root_package_apps:render"
       ],
       "executor": "nx:run-commands",
       "options": {
@@ -44,12 +44,45 @@
         "cwd": "packages/infrastructure/root_package_apps"
       }
     },
-    "root_package:destroy": {
-      "dependsOn": ["root_package:init"],
+    "root_package_apps:destroy": {
+      "dependsOn": ["root_package_apps:init"],
       "executor": "nx:run-commands",
       "options": {
         "command": "kpt live destroy --output=table",
         "cwd": "packages/infrastructure/root_package_apps"
+      }
+    },
+    "root_package_observability:render": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "kpt fn render",
+        "cwd": "packages/infrastructure/root_package_observability"
+      }
+    },
+    "root_package_observability:init": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "if [ ! -f resourcegroup.yaml ]; then kpt live init; fi",
+        "cwd": "packages/infrastructure/root_package_observability"
+      } 
+    },
+    "root_package_observability:apply": {
+      "dependsOn": [
+        "root_package_observability:init", 
+        "root_package_observability:render"
+      ],
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "kpt live apply --output=table",
+        "cwd": "packages/infrastructure/root_package_observability"
+      }
+    },
+    "root_package_observability:destroy": {
+      "dependsOn": ["root_package_observability:init"],
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "kpt live destroy --output=table",
+        "cwd": "packages/infrastructure/root_package_observability"
       }
     }
   }
