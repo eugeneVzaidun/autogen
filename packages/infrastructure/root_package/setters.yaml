@@ -6,5 +6,5 @@ metadata: # kpt-merge: /database-fake-setters
     config.kubernetes.io/local-config: 'true'
     internal.kpt.dev/upstream-identifier: '|ConfigMap|default|database-fake-setters'
 data:
-  frontend.image: chart-frontend:main
-  backend.image: chart-backend:main
+  frontend.image: chat-frontend:main
+  backend.image: chat-backend:main

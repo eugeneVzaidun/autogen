@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: chart-backend
-        image: chart-backend:main # kpt-set: ${backend.image}
+        image: chat-backend:main # kpt-set: ${backend.image}
         ports:
         - containerPort: 80

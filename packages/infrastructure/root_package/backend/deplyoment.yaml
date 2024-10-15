@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: chart-frontend
-        image: chart-frontend:main # kpt-set: ${frontend.image}
+        image: chat-frontend:main # kpt-set: ${frontend.image}
         ports:
         - containerPort: 80

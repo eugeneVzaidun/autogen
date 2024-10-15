@@ -37,7 +37,7 @@
       "dependsOn": ["root_package:init", "root_package:render"],
       "executor": "nx:run-commands",
       "options": {
-        "command": "kpt live apply",
+        "command": "kpt live apply --output=table",
         "cwd": "packages/infrastructure/root_package"
       }
     },
@@ -45,7 +45,7 @@
       "dependsOn": ["root_package:init"],
       "executor": "nx:run-commands",
       "options": {
-        "command": "kpt live destroy",
+        "command": "kpt live destroy --output=table",
         "cwd": "packages/infrastructure/root_package"
       }
     }
