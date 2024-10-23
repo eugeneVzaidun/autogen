@@ -74,6 +74,13 @@
         "cwd": "packages/chat-backend"
       }
     },
+    "run:watch": {
+      "executor": "@nxlv/python:run-commands",
+      "options": {
+        "command": "npx nodemon --config nodemon.json",
+        "cwd": "packages/chat-backend"
+      }
+    },
     "container:build": {
       "executor": "@nx-tools/nx-container:build",
       "dependsOn": ["build"],

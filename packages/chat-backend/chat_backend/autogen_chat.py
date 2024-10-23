@@ -52,8 +52,7 @@ class AutogenChat:
             name="assistant",
             llm_config=llm_config_assistant,
             system_message="""You are a helpful assistant, help the user find the status of his order. 
-            Only use the tools provided to do the search. Only execute the search after you have all the information needed. 
-            When you ask a question, always add the word "BRKT"" at the end.
+            Only use the tools provided to do the search. Only execute the search after you have all the information needed.
             When you responde with the status add the word TERMINATE""",
         )
         self.user_proxy = UserProxyWebAgent(

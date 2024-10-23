@@ -47,3 +47,4 @@ __pycache__/
 .env
 .env.*
 resourcegroup.yaml
+packages/chat-backend/chat_backend/.env
