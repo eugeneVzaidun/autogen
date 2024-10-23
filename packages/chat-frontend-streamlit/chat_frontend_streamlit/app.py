@@ -2,12 +2,15 @@ import streamlit as st
 from websockets.sync.client import connect
 from websockets.exceptions import ConnectionClosed
 import uuid
+import os
+from dotenv import load_dotenv
 
+# Load environment variables from a .env file
+load_dotenv()
 # Set the page configuration
 st.set_page_config(page_title="Kruso Agentic Experience", page_icon="💬", layout="centered")
 
 st.title("💬 Kruso Agentic Experience")
-
 # Initialize chat sessions in session state
 if "chat_sessions" not in st.session_state:
     st.session_state.chat_sessions = {}
@@ -29,7 +32,8 @@ def create_new_session():
 def connect_websocket(session_id):
     if st.session_state.chat_sessions[session_id]["ws_connected"]:
         return
-    url = f"ws://localhost:8000/ws/{session_id}"
+    base_url = os.getenv("WEBSOCKET_URL", "ws://localhost:8000/ws")
+    url = f"{base_url}/{session_id}"
     try:
         st.session_state.chat_sessions[session_id]["websocket"] = connect(url)
         st.session_state.chat_sessions[session_id]["ws_connected"] = True

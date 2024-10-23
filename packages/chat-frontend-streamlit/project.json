@@ -58,6 +58,38 @@
         "command": ".venv/bin/streamlit run chat_frontend_streamlit/app.py --server.fileWatcherType=auto --server.runOnSave=true",
         "cwd": "packages/chat-frontend-streamlit"
       }
+    },
+    "container:build": {
+      "dependsOn": ["build"],
+      "configurations": {
+        "k8s": {
+          
+        },
+        "docker": {}
+      },
+      "executor": "@nx-tools/nx-container:build",
+      "options": {
+        "engine": "docker",
+        "metadata": {
+          "images": ["chat-frontend-streamlit"],
+          "load": true,
+          "tags": [
+            "type=schedule",
+            "type=ref,event=branch",
+            "type=ref,event=tag",
+            "type=ref,event=pr",
+            "type=sha,prefix=sha-"
+          ]
+        }
+      }
+    },
+    "container:run": {
+      "dependsOn": ["container:build"],
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["docker run --env-file .env -p 8501:8501 chat-frontend-streamlit:main"],
+        "cwd": "packages/chat-frontend-streamlit"
+      }
     }
   },
   "tags": [],
