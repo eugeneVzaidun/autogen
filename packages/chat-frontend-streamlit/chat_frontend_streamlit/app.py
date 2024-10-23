@@ -1,25 +1,41 @@
 import streamlit as st
 from websockets.sync.client import connect
+from websockets.exceptions import ConnectionClosed
 import uuid
 
 # Set the page configuration
-st.set_page_config(page_title="Kruso Agentic Expirience", page_icon="💬", layout="centered")
+st.set_page_config(page_title="Kruso Agentic Experience", page_icon="💬", layout="centered")
 
-st.title("💬 Kruso Agentic Expirience")
+st.title("💬 Kruso Agentic Experience")
 
 # Initialize chat history in session state
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-
-def send_via_websocket(message):
+# Initialize WebSocket connection in session state
+if "websocket" not in st.session_state:
     unique_id = uuid.uuid4()
     url = f"ws://localhost:8000/ws/{unique_id}"
     try:
-        with connect(url) as websocket:
-            websocket.send(message)
-            response = websocket.recv()
-            return response
+        st.session_state.websocket = connect(url)
+        st.session_state.ws_connected = True
+    except Exception as e:
+        st.error(f"❌ Error connecting to WebSocket: {e}")
+        st.session_state.ws_connected = False
+
+
+def send_via_websocket(message):
+    if not st.session_state.get("ws_connected", False):
+        return "❌ WebSocket is not connected."
+
+    try:
+        websocket = st.session_state.websocket
+        websocket.send(message)
+        response = websocket.recv()
+        return response
+    except ConnectionClosed:
+        st.session_state.ws_connected = False
+        return "❌ Connection closed unexpectedly."
     except Exception as e:
         return f"❌ Error: {e}"
 
