@@ -8,3 +8,4 @@ metadata: # kpt-merge: /database-fake-setters
 data:
   frontend.image: chat-frontend:main
   backend.image: chat-backend:main
+  frontend-streamlit.image: chat-frontend-streamlit:main

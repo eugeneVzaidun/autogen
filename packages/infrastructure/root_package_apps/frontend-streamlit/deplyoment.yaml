@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chat-frontend-streamlit
+  labels:
+    app: chat-frontend-streamlit
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chat-frontend-streamlit
+  template:
+    metadata:
+      labels:
+        app: chat-frontend-streamlit
+    spec:
+      containers:
+      - name: chat-frontend-streamlit
+        image: chat-frontend-streamlit:main # kpt-set: ${frontend-streamlit.image}
+        env:
+        - name: STREAMLIT_SERVER_PORT
+          value: "80"
+        - name: WEBSOCKET_URL
+          value: "ws://0.0.0.0/ws"
+        ports:
+        - containerPort: 80
+        resources:

@@ -22,6 +22,6 @@ spec:
         prefix: /
     route:
     - destination:
-        host: chat-frontend.default.svc.cluster.local
+        host: chat-frontend-streamlit.default.svc.cluster.local
         port:
           number: 80
