@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: chat-frontend
+  name: chat-backend
   labels:
-    app: chat-frontend
+    app: chat-backend
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: chat-frontend
+      app: chat-backend
   template:
     metadata:
       labels:
-        app: chat-frontend
+        app: chat-backend
     spec:
       containers:
-      - name: chat-frontend
-        image: chat-frontend:main # kpt-set: ${frontend.image}
+      - name: chat-backend
+        image: chat-backend:main # kpt-set: ${backend.image}
         ports:
         - containerPort: 80
         resources:
