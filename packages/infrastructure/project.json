@@ -44,6 +44,18 @@
         "cwd": "packages/infrastructure/root_package_apps"
       }
     },
+    "root_package_apps:reapply": {
+      "dependsOn": [
+        "root_package_apps:init", 
+        "root_package_apps:render",
+        "root_package_apps:destroy"
+      ],
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "kpt live apply --output=table",
+        "cwd": "packages/infrastructure/root_package_apps"
+      }
+    },
     "root_package_apps:destroy": {
       "dependsOn": ["root_package_apps:init"],
       "executor": "nx:run-commands",
