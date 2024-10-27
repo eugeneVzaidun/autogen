@@ -1,0 +1,34 @@
+{
+  "name": "autogen-studio",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/autogen-studio",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "container:build": {
+      "executor": "@nx-tools/nx-container:build",
+      "dependsOn": ["build"],
+      "options": {
+        "engine": "docker",
+        "metadata": {
+          "images": ["autogen-studio"],
+          "load": true,
+          "tags": [
+            "type=schedule",
+            "type=ref,event=branch",
+            "type=ref,event=tag",
+            "type=ref,event=pr",
+            "type=sha,prefix=sha-"
+          ]
+        }
+      }
+    },
+    "container:run": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["docker run --rm --env-file .env -p 8081:8081 autogen-studio:main"],
+        "cwd": "packages/autogen-studio"
+      }
+    }
+  }
+}
