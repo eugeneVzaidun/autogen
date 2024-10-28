@@ -26,7 +26,7 @@
     "container:run": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["docker run --rm --env-file .env -p 8081:8081 autogen-studio:main"],
+        "commands": ["docker run -v $(PWD)/database:/home/user/app --rm --env-file .env -p 8081:8081 autogen-studio:main"],
         "cwd": "packages/autogen-studio"
       }
     }
