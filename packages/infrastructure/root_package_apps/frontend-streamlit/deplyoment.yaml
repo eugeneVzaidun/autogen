@@ -21,7 +21,7 @@ spec:
         - name: STREAMLIT_SERVER_PORT
           value: "80"
         - name: WEBSOCKET_URL
-          value: "ws://10.110.4.36/ws"
+          value: "ws://10.15.224.193/ws"
         ports:
         - containerPort: 80
         resources:

@@ -11,10 +11,8 @@ readme = 'README.md'
 
   [tool.poetry.dependencies]
   python = "3.12.6"
-  autogen-agentchat = "0.4.0.dev2"
-  autogen-core = "0.4.0.dev2"
-  autogen-ext = "0.4.0.dev2"
   python-dotenv = "^1.0.1"
+  autogen-agentchat = "0.4.0.dev4"
 
   [tool.poetry.group.dev.dependencies]
   autopep8 = "2.0.2"
