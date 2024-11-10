@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from autogen_core.application import WorkerAgentRuntime
 from autogen_core.base import MessageContext
 from autogen_core.components import DefaultTopicId, RoutedAgent, default_subscription, message_handler
+import logging
 
 
 @dataclass
@@ -39,9 +40,10 @@ async def main():
     await MyAgent.register(worker2, "worker2", lambda: MyAgent("worker2"))
 
     await worker2.publish_message(MyMessage(content="Hello!"), DefaultTopicId())
-    await asyncio.sleep(5)
+    await asyncio.sleep(10)
 
 
 # Run the main function within an asyncio event loop
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.DEBUG)
     asyncio.run(main())

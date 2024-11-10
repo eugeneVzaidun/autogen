@@ -1,46 +1,34 @@
-import logging
-import asyncio
-from autogen_agentchat import EVENT_LOGGER_NAME
-from autogen_agentchat.agents import ToolUseAssistantAgent
-from autogen_agentchat.logging import ConsoleLogHandler
-from autogen_agentchat.teams import MaxMessageTermination, RoundRobinGroupChat
-from autogen_core.components.tools import FunctionTool
+from autogen_agentchat.agents import AssistantAgent
+from autogen_agentchat.task import TextMentionTermination
+from autogen_agentchat.teams import RoundRobinGroupChat
 from autogen_ext.models import OpenAIChatCompletionClient
-from dotenv import load_dotenv
-
-load_dotenv()
-
-logger = logging.getLogger(EVENT_LOGGER_NAME)
-logger.addHandler(ConsoleLogHandler())
-logger.setLevel(logging.INFO)
+import asyncio
 
 
-# define a tool
+# Define a tool
 async def get_weather(city: str) -> str:
     return f"The weather in {city} is 73 degrees and Sunny."
 
 
-# wrap the tool for use with the agent
-get_weather_tool = FunctionTool(get_weather, description="Get the weather for a city")
-
-# define an agent
-weather_agent = ToolUseAssistantAgent(
-    name="writing_agent",
-    model_client=OpenAIChatCompletionClient(model="gpt-4o-2024-08-06"),
-    registered_tools=[get_weather_tool],
-)
-
-# add the agent to a team
-agent_team = RoundRobinGroupChat([weather_agent])
-
-
-# Note: if running in a Python file directly you'll need to use asyncio.run(agent_team.run(...)) instead of await agent_team.run(...)
-async def main():
-    result = await agent_team.run(
-        task="What is the weather in New York?",
-        termination_condition=MaxMessageTermination(max_messages=1),
+async def main() -> None:
+    # Define an agent
+    weather_agent = AssistantAgent(
+        name="weather_agent",
+        model_client=OpenAIChatCompletionClient(model="gpt-4o-2024-08-06"),
+        tools=[get_weather],
     )
-    print("\n", result)
+
+    # Define termination condition
+    termination = TextMentionTermination("TERMINATE")
+
+    # Define a team
+    agent_team = RoundRobinGroupChat([weather_agent], termination_condition=termination)
+
+    # Run the team and stream messages
+    stream = agent_team.run_stream("What is the weather in New York?")
+    async for response in stream:
+        print(response)
 
 
+# NOTE: if running this inside a Python script you'll need to use asyncio.run(main()).
 asyncio.run(main())

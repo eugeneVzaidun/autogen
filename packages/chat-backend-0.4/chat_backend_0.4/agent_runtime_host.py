@@ -1,6 +1,7 @@
 import asyncio
 import signal
 from autogen_core.application import WorkerAgentRuntimeHost
+import logging
 
 
 async def main():
@@ -10,4 +11,5 @@ async def main():
 
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.DEBUG)
     asyncio.run(main())
