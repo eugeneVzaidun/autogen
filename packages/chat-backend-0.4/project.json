@@ -59,6 +59,13 @@
         "cwd": "packages/chat-backend-0.4"
       }
     },
+    "run:server": {
+      "executor": "@nxlv/python:run-commands",
+      "options": {
+        "command": "poetry run python chat_backend_0.4/main.py",
+        "cwd": "packages/chat-backend-0.4"
+      }
+    },
     "run:debug": {
       "executor": "@nxlv/python:run-commands",
       "options": {
