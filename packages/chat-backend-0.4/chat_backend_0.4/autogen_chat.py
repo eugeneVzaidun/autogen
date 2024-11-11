@@ -73,7 +73,7 @@ class ChatSession:
 
                 # Put the assistant's reply into the output queue
                 print(result.messages)
-                await self.output_queue.put(result.messages[-2].content)
+                await self.output_queue.put(result.messages)
         except Exception as e:
             print(f"Error in process_messages: {str(e)}")
         finally:

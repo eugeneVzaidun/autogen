@@ -34,3 +34,21 @@ class UserProxyAgent(BaseChatAgent):
 
     def on_reset(self, cancellation_token):
         return super().on_reset(cancellation_token)
+
+
+# user_proxy_agent = UserProxyAgent(name="user_proxy_agent")
+
+
+# async def main():
+#     user_proxy_agent = UserProxyAgent(name="user_proxy_agent")
+
+#     user_proxy_agent_result = await user_proxy_agent.on_messages(
+#         messages=[
+#             TextMessage(content="What is the weather right now in France?", source="user"),
+#         ],
+#         cancellation_token=CancellationToken(),
+#     )
+#     print(user_proxy_agent_result)
+
+
+# asyncio.run(main())
