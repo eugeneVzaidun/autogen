@@ -59,6 +59,13 @@
         "cwd": "packages/chat-backend-0.4"
       }
     },
+    "run:debug": {
+      "executor": "@nxlv/python:run-commands",
+      "options": {
+        "command": "PYDEVD_DISABLE_FILE_VALIDATION=1 poetry run python -m debugpy --listen 5678 --wait-for-client chat_backend_0.4/app.py",
+        "cwd": "packages/chat-backend-0.4"
+      }
+    },
     "run:agent_runtime": {
       "executor": "@nxlv/python:run-commands",
       "options": {
