@@ -1,5 +1,5 @@
 from autogen_agentchat.agents import AssistantAgent
-from autogen_agentchat.task import TextMentionTermination
+from autogen_agentchat.task import TextMentionTermination, MaxMessageTermination
 from autogen_agentchat.teams import RoundRobinGroupChat
 from autogen_ext.models import OpenAIChatCompletionClient
 import asyncio
@@ -12,22 +12,26 @@ async def get_weather(city: str) -> str:
 
 async def main() -> None:
     # Define an agent
-    weather_agent = AssistantAgent(
-        name="weather_agent",
+    assistant = AssistantAgent(
+        name="assistant",
         model_client=OpenAIChatCompletionClient(model="gpt-4o-2024-08-06"),
         tools=[get_weather],
     )
 
     # Define termination condition
-    termination = TextMentionTermination("TERMINATE")
+    termination = MaxMessageTermination(5) | TextMentionTermination("TERMINATE")
 
     # Define a team
-    agent_team = RoundRobinGroupChat([weather_agent], termination_condition=termination)
+    agent_team = RoundRobinGroupChat([assistant], termination_condition=termination)
 
     # Run the team and stream messages
-    stream = agent_team.run_stream("What is the weather in New York?")
-    async for response in stream:
-        print(response)
+    # await agent_team.reset()
+
+    task2 = await agent_team.run(task="What is the weather in New York?")
+    print(task2.messages)
+
+    # task1 = await agent_team.run(task="What was my last question?")
+    # print(task1.messages)
 
 
 # NOTE: if running this inside a Python script you'll need to use asyncio.run(main()).

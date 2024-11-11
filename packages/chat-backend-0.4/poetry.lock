@@ -202,27 +202,27 @@ tests-mypy = ["mypy (>=1.11.1)", "pytest-mypy-plugins"]
 
 [[package]]
 name = "autogen-agentchat"
-version = "0.4.0.dev4"
+version = "0.4.0.dev6"
 description = "AutoGen agents and teams library"
 optional = false
 python-versions = ">=3.10"
 files = [
-    {file = "autogen_agentchat-0.4.0.dev4-py3-none-any.whl", hash = "sha256:97040593e75804ac0e2cef047c05c865c94341a5ae7e7caadf5a08899500cbe8"},
-    {file = "autogen_agentchat-0.4.0.dev4.tar.gz", hash = "sha256:93b4dc38726fa9bcc280028b8025a2e72075909b490a88b50304cac597a3d750"},
+    {file = "autogen_agentchat-0.4.0.dev6-py3-none-any.whl", hash = "sha256:ff54e68905256a8e9ee8f6fe38b50b09cffce321b55b3b29c8f14aab14dd56f6"},
+    {file = "autogen_agentchat-0.4.0.dev6.tar.gz", hash = "sha256:96d138b4b9060dd7e316c14a57846eb1876d6450ae72d1fc3688bf20611dcef8"},
 ]
 
 [package.dependencies]
-autogen-core = "0.4.0.dev4"
+autogen-core = "0.4.0.dev6"
 
 [[package]]
 name = "autogen-core"
-version = "0.4.0.dev4"
+version = "0.4.0.dev6"
 description = "Foundational interfaces and agent runtime implementation for AutoGen"
 optional = false
 python-versions = ">=3.10"
 files = [
-    {file = "autogen_core-0.4.0.dev4-py3-none-any.whl", hash = "sha256:868063c3e8eb8d68f1ba0e9ec0b61cb01829389d811bd70736bb6f4f25877f4b"},
-    {file = "autogen_core-0.4.0.dev4.tar.gz", hash = "sha256:3e99fea8e576cc7bf68a541d47d8cbd835d3031c9b4acc67c2cd5a731f526eba"},
+    {file = "autogen_core-0.4.0.dev6-py3-none-any.whl", hash = "sha256:fddfbd05a24d438246e8062952e6e9a27a2d325a511111bffb8c0e842c494016"},
+    {file = "autogen_core-0.4.0.dev6.tar.gz", hash = "sha256:41b2a169554c028d82b66285b5a326a42f18871a667ae1b645c8616eafd6595f"},
 ]
 
 [package.dependencies]
@@ -1724,4 +1724,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.12.6"
-content-hash = "2c14e4c2d07fafa79f7e06069e0ee2b5b586b107a89cc55245b9374097617976"
+content-hash = "37662d55ebd62b45540fba2cf3780e7b4ff07cf8020c72a547f4f605c1ccb04e"

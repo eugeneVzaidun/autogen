@@ -77,7 +77,7 @@
     "run:watch": {
       "executor": "@nxlv/python:run-commands",
       "options": {
-        "command": "npx nodemon --config nodemon.json",
+        "command": "PYDEVD_DISABLE_FILE_VALIDATION=1 npx nodemon --config nodemon.json --exec 'poetry run python -m debugpy --listen 5678 --wait-for-client chat_backend/main.py'",
         "cwd": "packages/chat-backend"
       }
     },
