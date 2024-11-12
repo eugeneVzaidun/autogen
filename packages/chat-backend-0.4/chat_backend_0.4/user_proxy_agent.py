@@ -1,5 +1,6 @@
 import asyncio
 from typing import List, Sequence
+import logging
 
 from autogen_agentchat.agents import BaseChatAgent
 from autogen_agentchat.base import Response
@@ -7,8 +8,12 @@ from autogen_agentchat.messages import (
     ChatMessage,
     StopMessage,
     TextMessage,
+    FunctionExecutionResult,  # Added FunctionExecutionResult
 )
 from autogen_core.base import CancellationToken
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
 
 
 class UserProxyAgent(BaseChatAgent):
@@ -23,10 +28,12 @@ class UserProxyAgent(BaseChatAgent):
         # Process incoming messages from AssistantAgent
         for message in messages:
             if isinstance(message, TextMessage):
-                print(f"Assistant: {message.content}")
+                logging.info(f"Assistant: {message.content}")
         user_input = await asyncio.get_event_loop().run_in_executor(None, input, "Enter your response: ")
         if "TERMINATE" in user_input:
+            logging.info("User has terminated the conversation.")
             return Response(chat_message=StopMessage(content="User has terminated the conversation.", source=self.name))
+        logging.info(f"User response: {user_input}")
         return Response(chat_message=TextMessage(content=user_input, source=self.name))
 
     async def reset(self, cancellation_token: CancellationToken) -> None:

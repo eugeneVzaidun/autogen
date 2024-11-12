@@ -1,0 +1,21 @@
+{
+  "name": "docker",
+  "sourceRoot": "packages/infrastructure/docker",
+  "projectType": "application",
+  "targets": {
+    "docker:up": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker compose up -d",
+        "cwd": "packages/infrastructure/docker"
+      }
+    },
+    "docker:down": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker compose down",
+        "cwd": "packages/infrastructure/docker"
+      }
+    }
+  }
+}
