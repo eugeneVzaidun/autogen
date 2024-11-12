@@ -2,7 +2,8 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from autogen_chat import ChatSession
 import uvicorn
 import logging
-import graypy
+
+# import graypy
 
 app = FastAPI()
 
@@ -10,8 +11,8 @@ app = FastAPI()
 logging.basicConfig(level=logging.INFO)
 
 # Add Graypy handler
-graylog_handler = graypy.GELFUDPHandler("0.0.0.0", 12202)
-logging.getLogger().addHandler(graylog_handler)
+# graylog_handler = graypy.GELFUDPHandler("0.0.0.0", 12202)
+# logging.getLogger().addHandler(graylog_handler)
 
 
 class ConnectionManager:

@@ -8,7 +8,7 @@ import graypy
 import asyncio
 
 # Configure logging
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 
 # Add Graypy handler
 graylog_handler = graypy.GELFUDPHandler("0.0.0.0", 12202)

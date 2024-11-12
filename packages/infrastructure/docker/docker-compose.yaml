@@ -63,6 +63,7 @@ services:
       GRAYLOG_MONGODB_URI: "mongodb://mongodb:27017/graylog"
       GRAYLOG_TIMEZONE: "Europe/Amsterdam"
       TZ: "Europe/Amsterdam"
+      # GRAYLOG_MESSAGE_JOURNAL_MAX_SIZE: "8357mb"
       
     entrypoint: /usr/bin/tini -- wait-for-it opensearch:9200 -- /docker-entrypoint.sh
     volumes:
