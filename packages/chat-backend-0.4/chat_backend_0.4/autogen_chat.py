@@ -35,14 +35,12 @@ class ChatSession:
         self.assistant = AssistantAgent(
             name="assistant",
             model_client=OpenAIChatCompletionClient(model="gpt-4o-mini"),
-            tools=[web_search],  # Added tools
+            # tools=[web_search],  # Added tools
             system_message="""You are a helpful assistant. When you respond with the status, add the word TERMINATE.""",
         )
 
         # Define termination condition
-        self.termination = (
-            TextMentionTermination("TERMINATE") | TextMentionTermination("DO_FINISH") | TextMentionTermination("STOP")
-        )
+        self.termination = TextMentionTermination("TERMINATE")
 
     async def process_messages(self):
         try:
@@ -55,9 +53,6 @@ class ChatSession:
             while True:
                 # Receive a message from the client
                 data = await self.websocket.receive_text()
-                if data == "DO_FINISH":
-                    break
-
                 logging.info(f"Processing task: {data}")
 
                 # Run the team on the task
