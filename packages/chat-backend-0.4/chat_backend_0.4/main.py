@@ -2,6 +2,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from autogen_chat import ChatSession
 import uvicorn
 import logging
+from user_proxy_agent import UserProxyAgent
 
 # import graypy
 
@@ -35,7 +36,8 @@ manager = ConnectionManager()
 
 @app.websocket("/ws/{chat_id}")
 async def websocket_endpoint(websocket: WebSocket, chat_id: str):
-    chat_session = ChatSession(websocket)
+    user_proxy_agent = UserProxyAgent(name="user_proxy_agent", websocket=websocket)
+    chat_session = ChatSession(websocket, user_proxy_agent)
     await manager.connect(chat_session)
     try:
         await chat_session.run()
