@@ -1,9 +1,8 @@
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: node-red
-  namespace: test
+  namespace: event-12
 spec:
   replicas: 1
   selector:

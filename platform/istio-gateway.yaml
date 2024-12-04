@@ -1,9 +1,8 @@
-
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: node-red-gateway
-  namespace: test
+  name: generic-gateway
+  namespace: event-12
 spec:
   selector:
     istio: aks-istio-ingressgateway-external

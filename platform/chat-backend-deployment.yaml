@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: chat-backend-deployment
-  namespace: test
+  namespace: event-12
 spec:
   replicas: 1
   selector:
@@ -24,4 +24,3 @@ spec:
                 secretKeyRef:
                   name: openai-api-key-secret
                   key: OPENAI_API_KEY
-                  
