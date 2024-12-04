@@ -84,7 +84,7 @@
       "executor": "@nx-tools/nx-container:build",
       "options": {
         "engine": "docker",
-        "platforms": ["linux/arm64"],
+        "platforms": ["linux/amd64"],
         "metadata": {
           "images": ["chat-frontend-streamlit"],
           "load": true,
