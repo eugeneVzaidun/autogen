@@ -69,6 +69,7 @@
           "metadata": {
             "images": ["krusonl.azurecr.io/chat-frontend-streamlit"],
             "load": true,
+            "push": true,
             "tags": [
               "type=schedule",
               "type=ref,event=branch",
@@ -83,7 +84,7 @@
       "executor": "@nx-tools/nx-container:build",
       "options": {
         "engine": "docker",
-        "platforms": ["linux/amd64", "linux/arm64"],
+        "platforms": ["linux/arm64"],
         "metadata": {
           "images": ["chat-frontend-streamlit"],
           "load": true,
