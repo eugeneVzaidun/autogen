@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: streamlit
-          image: krusonl.azurecr.io/chat-frontend-streamlit:sha-759cbfd
+          image: krusonl.azurecr.io/chat-frontend-streamlit:sha-2d85255
           ports:
             - containerPort: 8501
           env:

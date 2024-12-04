@@ -69,7 +69,6 @@
           "metadata": {
             "images": ["krusonl.azurecr.io/chat-frontend-streamlit"],
             "load": true,
-            "push": true,
             "tags": [
               "type=schedule",
               "type=ref,event=branch",
@@ -85,6 +84,7 @@
       "options": {
         "engine": "docker",
         "platforms": ["linux/amd64"],
+        "push": true,
         "metadata": {
           "images": ["chat-frontend-streamlit"],
           "load": true,
