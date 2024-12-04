@@ -22,3 +22,5 @@ spec:
           env:
             - name: STREAMLIT_SERVER_PORT
               value: "8501"
+            - name: WEBSOCKET_URL
+              value: ws://52.155.92.36/ws
