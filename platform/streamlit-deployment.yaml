@@ -19,8 +19,8 @@ spec:
           image: krusonl.azurecr.io/chat-frontend-streamlit:sha-7ff6e22
           ports:
             - containerPort: 8501
-          env:
+          envs:
             - name: STREAMLIT_SERVER_PORT
               value: "8501"
             - name: WEBSOCKET_URL
-              value: ws://52.155.92.36/ws
+              value: "ws://52.155.92.36/ws"
