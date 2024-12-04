@@ -29,7 +29,7 @@ def connect_websocket():
         st.session_state.websocket = connect(base_url)
         st.session_state.ws_connected = True
     except Exception as e:
-        st.sidebar.error(f"❌ Error connecting to WebSocket: {e}")
+        st.error(f"❌ Error connecting to WebSocket: {e}")
         st.session_state.ws_connected = False
 
 
