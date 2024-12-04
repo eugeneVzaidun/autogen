@@ -3,4 +3,4 @@ kind: Namespace
 metadata:
   name: test
   labels:
-    istio.io/rev: asm-1.23
+    istio.io/rev: asm-1-23
