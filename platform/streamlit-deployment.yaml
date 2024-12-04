@@ -1,0 +1,24 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: streamlit-deployment
+  namespace: test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: streamlit
+  template:
+    metadata:
+      labels:
+        app: streamlit
+    spec:
+      containers:
+        - name: streamlit
+          image: krusonl.azurecr.io/chat-frontend-streamlit:main
+          ports:
+            - containerPort: 8501
+          env:
+            - name: STREAMLIT_SERVER_PORT
+              value: "8501"

@@ -10,7 +10,7 @@ readme = 'README.md'
   include = "chat_backend_0.4"
 
   [tool.poetry.dependencies]
-  python = "3.12.6"
+  python = ">=3.12.6, <3.13"
   python-dotenv = "^1.0.1"
   autogen-agentchat = "0.4.0.dev6"
   autogen-core = "0.4.0.dev6"

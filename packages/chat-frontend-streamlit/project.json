@@ -65,6 +65,19 @@
         "k8s": {
           
         },
+        "k8s.aks": {
+          "metadata": {
+            "images": ["krusonl.azurecr.io/chat-frontend-streamlit"],
+            "load": true,
+            "tags": [
+              "type=schedule",
+              "type=ref,event=branch",
+              "type=ref,event=tag",
+              "type=ref,event=pr",
+              "type=sha,prefix=sha-"
+            ]
+          }
+        },
         "docker": {}
       },
       "executor": "@nx-tools/nx-container:build",

@@ -10,7 +10,7 @@ readme = 'README.md'
   include = "chat_frontend_streamlit"
 
   [tool.poetry.dependencies]
-  python = "3.12.6"
+  python = ">=3.12.6, <3.13"
   streamlit = "^1.39.0"
   watchdog = "^5.0.3"
   websockets = "^13.1"
