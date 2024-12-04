@@ -86,6 +86,7 @@
       "dependsOn": ["build"],
       "configurations": {
         "aks": {
+          "push":true,
           "metadata": {
             "images": ["krusonl.azurecr.io/chat-backend"],
             "load": true,
@@ -102,7 +103,7 @@
       "options": {
         "engine": "docker",
         "platforms": ["linux/amd64"],
-        "push": true,
+        "push": false,
         "metadata": {
           "images": ["chat-backend"],
           "load": true,
