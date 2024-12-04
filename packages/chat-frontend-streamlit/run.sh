@@ -21,7 +21,7 @@ trap stopRunningProcess EXIT TERM
 source ${VIRTUAL_ENV}/bin/activate
 PORT=${STREAMLIT_SERVER_PORT:-8501}
 
-streamlit run ${HOME}/app.py --server.port $PORT &
+streamlit run ${HOME}/app.py --server.port $PORT --server.baseUrlPath /streamlit &
 APP_ID=${!}
 
 wait ${APP_ID}
