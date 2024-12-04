@@ -1,0 +1,24 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chat-backend-deployment
+  namespace: test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chat-backend
+  template:
+    metadata:
+      labels:
+        app: chat-backend
+    spec:
+      containers:
+        - name: chat-backend
+          image: krusonl.azurecr.io/chat-backend:sha-8d82c2d
+          ports:
+            - containerPort: 8000
+          env:
+            - name: BACKEND_PORT
+              value: "8000"

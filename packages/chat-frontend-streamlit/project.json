@@ -65,7 +65,7 @@
         "k8s": {
           
         },
-        "k8s.aks": {
+        "aks": {
           "metadata": {
             "images": ["krusonl.azurecr.io/chat-frontend-streamlit"],
             "load": true,

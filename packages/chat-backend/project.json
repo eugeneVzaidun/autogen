@@ -84,8 +84,25 @@
     "container:build": {
       "executor": "@nx-tools/nx-container:build",
       "dependsOn": ["build"],
+      "configurations": {
+        "aks": {
+          "metadata": {
+            "images": ["krusonl.azurecr.io/chat-backend"],
+            "load": true,
+            "tags": [
+              "type=schedule",
+              "type=ref,event=branch",
+              "type=ref,event=tag",
+              "type=ref,event=pr",
+              "type=sha,prefix=sha-"
+            ]
+          }
+        }
+      },
       "options": {
         "engine": "docker",
+        "platforms": ["linux/amd64"],
+        "push": true,
         "metadata": {
           "images": ["chat-backend"],
           "load": true,

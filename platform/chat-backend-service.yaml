@@ -1,0 +1,13 @@
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: chat-backend-service
+  namespace: test
+spec:
+  selector:
+    app: chat-backend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
