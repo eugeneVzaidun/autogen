@@ -8,6 +8,7 @@ from autogen_agentchat.messages import (
     ChatMessage,
     StopMessage,
     TextMessage,
+    AgentMessage,
     FunctionExecutionResult,  # Added FunctionExecutionResult
 )
 from autogen_core.base import CancellationToken
@@ -22,7 +23,7 @@ class UserProxyAgent(BaseChatAgent):
 
     @property
     def produced_message_types(self) -> List[type[ChatMessage]]:
-        return [TextMessage, StopMessage]
+        return [AgentMessage | ChatMessage | FunctionExecutionResult]
 
     async def on_messages(self, messages: Sequence[ChatMessage], cancellation_token: CancellationToken) -> Response:
         # Process incoming messages from AssistantAgent

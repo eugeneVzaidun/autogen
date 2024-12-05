@@ -1,0 +1,1 @@
+favicon = '<svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 143 180"><path d="M80 142H58l-30-38 30-40h22l-30 40 30 38zm11 0h22l30-38-30-40H91l30 40-30 38zM18 30H0v112h18V30z" fill="#c28e29"/></svg>'

@@ -4,11 +4,16 @@ from websockets.exceptions import ConnectionClosed
 import uuid
 import os
 from dotenv import load_dotenv
+from favicon import favicon
 
 # Load environment variables from a .env file
 load_dotenv()
 # Set the page configuration
-st.set_page_config(page_title="Kruso Agentic Experience", page_icon="💬", layout="centered")
+st.set_page_config(
+    page_title="Kruso Agentic Experience",
+    page_icon=favicon,
+    layout="centered",
+)
 
 st.title("💬 Kruso Agentic Experience")
 # Initialize chat sessions in session state
