@@ -31,7 +31,9 @@ class MyAgent(RoutedAgent):
         super().__init__("MyAgent")
         self.websocket = websocket
         self._model_client = model_client
-        self._system_message = SystemMessage(content="You are personal assistant, good in answering generic questions.")
+        self._system_message = SystemMessage(
+            content="You are a versatile assistant, proficient in handling a variety of tasks and inquiries."
+        )
 
     @message_handler
     async def on_text_message(self, message: UserMessage, ctx: MessageContext) -> None:
@@ -64,8 +66,8 @@ async def websocket_endpoint(websocket: WebSocket):
     runtime = SingleThreadedAgentRuntime()
     runtimes[session_id] = runtime
 
-    await MyAgent.register(runtime, "my_agent", lambda: MyAgent(websocket=websocket))
-    agent_id = AgentId("my_agent", "default")
+    await MyAgent.register(runtime, "generic_agent", lambda: MyAgent(websocket=websocket))
+    agent_id = AgentId("generic_agent", "default")
     runtime.start()
 
     try:

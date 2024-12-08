@@ -18,7 +18,6 @@ from autogen_core.components.models import (
 )
 from autogen_core.components.tools import Tool
 
-
 from models import UserTask, AgentResponse, UserLogin
 
 
@@ -74,7 +73,7 @@ class AIAgent(RoutedAgent):
                         FunctionExecutionResultMessage(
                             content=[
                                 FunctionExecutionResult(
-                                    call_id=call.id, content=f"Transfered to {topic_type}. Adopt persona immediately."
+                                    call_id=call.id, content=f"Delegated to {topic_type}. Proceed accordingly."
                                 )
                             ]
                         ),
