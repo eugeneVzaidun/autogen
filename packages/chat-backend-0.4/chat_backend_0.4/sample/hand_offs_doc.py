@@ -365,6 +365,7 @@ async def main():
             model_client=model_client,
             tools=[],
             delegate_tools=[
+                transfer_to_issues_and_repairs_tool,
                 transfer_to_sales_agent_tool,
                 escalate_to_human_tool,
             ],
@@ -405,6 +406,37 @@ async def main():
     # Add subscriptions for the sales agent: it will receive messages published to its own topic only.
     await runtime.add_subscription(
         TypeSubscription(topic_type=sales_agent_topic_type, agent_type=sales_agent_type.type)
+    )
+
+    # Register the issues and repairs agent.
+    issues_and_repairs_agent_type = await AIAgent.register(
+        runtime,
+        type=issues_and_repairs_agent_topic_type,  # Using the topic type as the agent type.
+        factory=lambda: AIAgent(
+            description="An issues and repairs agent.",
+            system_message=SystemMessage(
+                content="You are a customer support agent for ACME Inc."
+                "Always answer in a sentence or less."
+                "Follow the following routine with the user:"
+                "1. First, ask probing questions and understand the user's problem deeper.\n"
+                " - unless the user has already provided a reason.\n"
+                "2. Propose a fix (make one up).\n"
+                "3. ONLY if not satesfied, offer a refund.\n"
+                "4. If accepted, search for the ID and then execute refund."
+            ),
+            model_client=model_client,
+            tools=[
+                execute_refund_tool,
+                look_up_item_tool,
+            ],
+            delegate_tools=[transfer_back_to_triage_tool],
+            agent_topic_type=issues_and_repairs_agent_topic_type,
+            user_topic_type=user_topic_type,
+        ),
+    )
+    # Add subscriptions for the issues and repairs agent: it will receive messages published to its own topic only.
+    await runtime.add_subscription(
+        TypeSubscription(topic_type=issues_and_repairs_agent_topic_type, agent_type=issues_and_repairs_agent_type.type)
     )
 
     # Register the human agent.
