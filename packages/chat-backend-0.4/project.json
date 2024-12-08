@@ -94,6 +94,50 @@
         "cwd": "packages/chat-backend-0.4"
       }
     },
+    "container:build": {
+      "executor": "@nx-tools/nx-container:build",
+      "dependsOn": ["build"],
+      "configurations": {
+        "aks": {
+          "push":true,
+          "metadata": {
+            "images": ["krusonl.azurecr.io/chat-backend"],
+            "load": true,
+            "tags": [
+              "type=schedule",
+              "type=ref,event=branch",
+              "type=ref,event=tag",
+              "type=ref,event=pr",
+              "type=sha,prefix=sha-"
+            ]
+          }
+        }
+      },
+      "options": {
+        "engine": "docker",
+        "platforms": ["linux/amd64"],
+        "push": false,
+        "metadata": {
+          "images": ["chat-backend"],
+          "load": true,
+          "tags": [
+            "type=schedule",
+            "type=ref,event=branch",
+            "type=ref,event=tag",
+            "type=ref,event=pr",
+            "type=sha,prefix=sha-"
+          ]
+        }
+      }
+    },
+    "container:run": {
+      "dependsOn": ["container:build"],
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["docker run --env-file .env -p 8000:8000 chat-backend:main"],
+        "cwd": "packages/chat-backend/chat_backend"
+      }
+    }
   },
   "tags": [],
   "release": {
