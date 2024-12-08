@@ -3,7 +3,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: node-red
-  namespace: test
+  namespace: event-12
 spec:
   hosts:
   - "*"
