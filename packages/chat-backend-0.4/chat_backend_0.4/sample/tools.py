@@ -1,5 +1,11 @@
 from autogen_core.components.tools import FunctionTool
 
+sales_agent_topic_type = "SalesAgent"
+issues_and_repairs_agent_topic_type = "IssuesAndRepairsAgent"
+triage_agent_topic_type = "TriageAgent"
+human_agent_topic_type = "HumanAgent"
+user_topic_type = "User"
+
 
 def execute_order(product: str, price: int) -> str:
     print("\n\n=== Order Summary ===")
