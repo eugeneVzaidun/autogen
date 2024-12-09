@@ -23,4 +23,5 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: openai-api-key-secret
-                  key: OPENAI_API_KEY  # Ensure this key exists in the secret
+                  key: OPENAI_API_KEY
+          resources: {}
