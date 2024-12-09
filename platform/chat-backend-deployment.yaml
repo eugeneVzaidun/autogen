@@ -18,9 +18,9 @@ spec:
           image: krusonl.azurecr.io/chat-backend:sha-603efc3
           ports:
             - containerPort: 8000
-              env:
-              - name: OPENAI_API_KEY
-                valueFrom:
-                secretKeyRef:
-                  name: openai-api-key-secret
-                  key: OPENAI_API_KEY
+          env:
+          - name: OPENAI_API_KEY
+            valueFrom:
+            secretKeyRef:
+              name: openai-api-key-secret
+              key: OPENAI_API_KEY
