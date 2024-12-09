@@ -1,0 +1,33 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: external-dns
+  annotations:
+    config.kubernetes.io/local-config: 'true'
+upstream:
+  type: git
+  git:
+    repo: 'https://github.com/shypple/shypple-next-blueprint'
+    directory: /external-dns
+    ref: v0
+  updateStrategy: resource-merge
+upstreamLock:
+  type: git
+  git:
+    repo: 'https://github.com/shypple/shypple-next-blueprint'
+    directory: /external-dns
+    ref: external-dns/v0
+    commit: 9648f99cee478d58126e0af375cc566f5af655c0
+info:
+  description: 'This blueprint deploys [external-dns](https://github.com/kubernetes-sigs/external-dns) to the kubernetes cluster'
+pipeline:
+  mutators:
+    - image: 'gcr.io/kpt-fn/apply-setters:v0.2.0'
+      configPath: setters.yaml
+    # - image: 'gcr.io/kpt-fn/set-namespace:v0.4.1'
+    #   configPath: package-context.yaml
+  validators:
+    - image: 'gcr.io/kpt-fn/kubeval:v0.3.0'
+      configMap:
+        ignore_missing_schemas: 'true'
+        strict: 'true'

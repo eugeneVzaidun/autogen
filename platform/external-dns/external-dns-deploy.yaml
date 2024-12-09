@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: # kpt-merge: example/external-dns
+  name: external-dns
+  namespace: external-dns
+  annotations:
+    internal.kpt.dev/upstream-identifier: apps|Deployment|example|external-dns
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: external-dns
+  template:
+    metadata:
+      labels:
+        app: external-dns
+    spec:
+      serviceAccountName: external-dns
+      containers:
+        - name: external-dns
+          image: 'registry.k8s.io/external-dns/external-dns:v0.13.2'
+          imagePullPolicy: IfNotPresent
+          args: # kpt-set: ${deployment-args}
+            - --source=service # ingress is also possible
+            - --source=ingress
+            - --source=istio-gateway # choose one
+            - --source=istio-virtualservice # or both
+            - --provider=cloudflare
+            - --cloudflare-proxied # (optional) enable the proxy feature of Cloudflare (DDOS protection, CDN...)
+            - --metrics-address=:7979
+            - --log-level=info
+            - --log-format=text
+            - --policy=upsert-only
+            - --interval=1m
+            - --registry=txt
+            - --txt-owner-id=bildi-ai-prod
+          envFrom:
+            - secretRef:
+                name: external-dns # kpt-set: ${secret-name}
+          resources:
+            requests:
+              memory: 16Mi
+              cpu: 20m
+            limits:
+              memory: 128Mi
+              cpu: 100m
+          ports:
+            - containerPort: 7979
+              name: http
+              protocol: TCP
+          livenessProbe:
+            failureThreshold: 2
+            httpGet:
+              path: /healthz
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          readinessProbe:
+            failureThreshold: 6
+            httpGet:
+              path: /healthz
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      securityContext:
+        fsGroup: 1001
+        runAsUser: 1001
+      terminationGracePeriodSeconds: 30

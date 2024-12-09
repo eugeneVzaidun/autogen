@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: ConfigMap
+metadata: # kpt-merge: /setters
+  name: ingress-gateway-setters
+  annotations:
+    config.kubernetes.io/local-config: 'true'
+    internal.kpt.dev/upstream-identifier: '|ConfigMap|default|setters'
+data:
+  namespace: external-dns
+  cloudflare-api-key-secret: cloudflare-api-key
+  cloudflare-email-secret: cloudflare-email
+  cloudflare-api-token-secret: cloudflare-api-token
+  deployment-args: |
+    - --source=service
+    - --source=ingress
+    - --source=istio-gateway        # choose one
+    - --source=istio-virtualservice # or both
+    - --provider=cloudflare
+    - --cloudflare-proxied # (optional) enable the proxy feature of Cloudflare (DDOS protection, CDN...)
+    - --metrics-address=:7979
+    - --log-level=info
+    - --log-format=text
+    - --policy=upsert-only
+    - --interval=1m
+    - --registry=txt
+    - --txt-owner-id=shypple-dev
+  project-id: bildi-ai-prod
+  cluster-name: prod
+  location: europe-west4-b
+  service-account-name: external-dns-secrets
+  secrets-store-name: external-secrets-store
+  secret-name: external-dns
