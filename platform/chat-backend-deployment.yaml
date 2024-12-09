@@ -19,8 +19,8 @@ spec:
           ports:
             - containerPort: 8000
           env:
-          - name: OPENAI_API_KEY
-            valueFrom:
-            secretKeyRef:
-              name: openai-api-key-secret
-              key: OPENAI_API_KEY
+            - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: openai-api-key-secret
+                  key: OPENAI_API_KEY  # Ensure this key exists in the secret
