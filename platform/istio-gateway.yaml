@@ -7,9 +7,18 @@ spec:
   selector:
     istio: aks-istio-ingressgateway-external
   servers:
-  - port:
-      number: 80
-      name: http
-      protocol: HTTP
-    hosts:
-    - "*.lelos.xyz"
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*.lelos.xyz"
+    - port:
+        number: 443
+        name: https
+        protocol: HTTPS
+      tls:
+        mode: SIMPLE
+        credentialName: tls-secret
+      hosts:
+        - "*.lelos.xyz"
