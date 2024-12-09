@@ -11,7 +11,7 @@ spec:
   http:
     - match:
         - uri:
-            prefix: /agentic-game
+            prefix: /agentic_game
       route:
         - destination:
             host: streamlit-service
