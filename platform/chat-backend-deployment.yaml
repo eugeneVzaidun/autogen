@@ -4,7 +4,7 @@ metadata:
   name: chat-backend-deployment
   namespace: event-12
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       app: chat-backend
