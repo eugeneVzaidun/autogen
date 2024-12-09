@@ -5,7 +5,7 @@ metadata:
   namespace: event-12
 spec:
   hosts:
-    - "*"
+    - "kruso-event-12.lelos.xyz"
   gateways:
     - generic-gateway
   http:
