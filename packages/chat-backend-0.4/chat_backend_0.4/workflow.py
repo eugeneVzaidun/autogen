@@ -2,8 +2,8 @@ import tools
 from fastapi import WebSocket
 from autogen_ext.models import OpenAIChatCompletionClient
 from autogen_core import SingleThreadedAgentRuntime, TypeSubscription
-from autogen_core.components.models import SystemMessage
 from agents import AIAgent, HumanAgent, WebSocketUserAgent
+import prompts
 
 model_client = OpenAIChatCompletionClient(model="gpt-4o-mini")
 
@@ -14,11 +14,8 @@ async def initialize_agents(runtime: SingleThreadedAgentRuntime, session_id: str
         runtime,
         type=tools.general_agent_topic_type,
         factory=lambda: AIAgent(
-            description="A general-purpose agent.",
-            system_message=SystemMessage(
-                content="You are a versatile agent capable of handling various business workflows. "
-                "Assist users by performing tasks, retrieving information, and escalating issues when necessary."
-            ),
+            description=prompts.GENERAL_AGENT_DESCRIPTION,
+            system_message=prompts.GENERAL_AGENT_SYSTEM_MESSAGE,
             model_client=model_client,
             tools=[tools.execute_task_tool, tools.lookup_resource_tool],
             delegate_tools=[tools.delegate_to_support_agent_tool, tools.escalate_to_human_agent_tool],
@@ -35,10 +32,8 @@ async def initialize_agents(runtime: SingleThreadedAgentRuntime, session_id: str
         runtime,
         type=tools.support_agent_topic_type,
         factory=lambda: AIAgent(
-            description="A support agent.",
-            system_message=SystemMessage(
-                content="You are a support agent specialized in assisting with customer inquiries and issues."
-            ),
+            description=prompts.SUPPORT_AGENT_DESCRIPTION,
+            system_message=prompts.SUPPORT_AGENT_SYSTEM_MESSAGE,
             model_client=model_client,
             tools=[tools.process_refund_tool],
             delegate_tools=[tools.delegate_back_to_escalation_tool],
@@ -55,7 +50,7 @@ async def initialize_agents(runtime: SingleThreadedAgentRuntime, session_id: str
         runtime,
         type=tools.human_agent_topic_type,
         factory=lambda: HumanAgent(
-            description="A human agent.",
+            description=prompts.HUMAN_AGENT_DESCRIPTION,
             agent_topic_type=tools.human_agent_topic_type,
             user_topic_type=tools.user_topic_type,
         ),
@@ -69,7 +64,7 @@ async def initialize_agents(runtime: SingleThreadedAgentRuntime, session_id: str
         runtime,
         type=tools.user_topic_type,
         factory=lambda: WebSocketUserAgent(
-            description="A user agent.",
+            description=prompts.USER_AGENT_DESCRIPTION,
             user_topic_type=tools.user_topic_type,
             agent_topic_type=tools.general_agent_topic_type,
             websocket=websocket,
