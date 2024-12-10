@@ -17,46 +17,14 @@ async def initialize_agents(runtime: SingleThreadedAgentRuntime, session_id: str
             description=prompts.GENERAL_AGENT_DESCRIPTION,
             system_message=prompts.GENERAL_AGENT_SYSTEM_MESSAGE,
             model_client=model_client,
-            tools=[tools.execute_task_tool, tools.lookup_resource_tool],
-            delegate_tools=[tools.delegate_to_support_agent_tool, tools.escalate_to_human_agent_tool],
+            tools=[],
+            delegate_tools=[],
             agent_topic_type=tools.general_agent_topic_type,
             user_topic_type=tools.user_topic_type,
         ),
     )
     await runtime.add_subscription(
         TypeSubscription(topic_type=tools.general_agent_topic_type, agent_type=general_agent_type.type)
-    )
-
-    # Register the support agent
-    support_agent_type = await AIAgent.register(
-        runtime,
-        type=tools.support_agent_topic_type,
-        factory=lambda: AIAgent(
-            description=prompts.SUPPORT_AGENT_DESCRIPTION,
-            system_message=prompts.SUPPORT_AGENT_SYSTEM_MESSAGE,
-            model_client=model_client,
-            tools=[tools.process_refund_tool],
-            delegate_tools=[tools.delegate_back_to_escalation_tool],
-            agent_topic_type=tools.support_agent_topic_type,
-            user_topic_type=tools.user_topic_type,
-        ),
-    )
-    await runtime.add_subscription(
-        TypeSubscription(topic_type=tools.support_agent_topic_type, agent_type=support_agent_type.type)
-    )
-
-    # Register the human agent
-    human_agent_type = await HumanAgent.register(
-        runtime,
-        type=tools.human_agent_topic_type,
-        factory=lambda: HumanAgent(
-            description=prompts.HUMAN_AGENT_DESCRIPTION,
-            agent_topic_type=tools.human_agent_topic_type,
-            user_topic_type=tools.user_topic_type,
-        ),
-    )
-    await runtime.add_subscription(
-        TypeSubscription(topic_type=tools.human_agent_topic_type, agent_type=human_agent_type.type)
     )
 
     # Register the user agent using the WebSocketUserAgent

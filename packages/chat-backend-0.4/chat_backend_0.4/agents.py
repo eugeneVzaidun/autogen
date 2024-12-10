@@ -15,6 +15,7 @@ from autogen_core.models import (
     FunctionExecutionResultMessage,
     SystemMessage,
     UserMessage,
+    LLMMessage,
 )
 from autogen_core.tools import Tool
 
@@ -41,15 +42,18 @@ class AIAgent(RoutedAgent):
         self._delegate_tool_schema = [tool.schema for tool in delegate_tools]
         self._agent_topic_type = agent_topic_type
         self._user_topic_type = user_topic_type
+        self._messages: List[LLMMessage] = []
 
     @message_handler
     async def handle_task(self, message: UserTask, ctx: MessageContext) -> None:
-        # Send the task to the LLM.
+        self._messages.append(message.context[-1])
         llm_result = await self._model_client.create(
-            messages=[self._system_message] + message.context,
+            messages=[self._system_message] + self._messages + message.context,
             tools=self._tool_schema + self._delegate_tool_schema,
             cancellation_token=ctx.cancellation_token,
         )
+        self._messages.append(AssistantMessage(content=llm_result.content, source=self.id.type))
+
         print(f"{'-'*80}\n{self.id.type}:\n{llm_result.content}", flush=True)
         # Process the LLM result.
         while isinstance(llm_result.content, list) and all(isinstance(m, FunctionCall) for m in llm_result.content):
