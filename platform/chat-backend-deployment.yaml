@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: chat-backend
-          image: krusonl.azurecr.io/chat-backend:sha-603efc3
+          image: krusonl.azurecr.io/chat-backend:sha-e586071
           ports:
             - containerPort: 8000
           env:
