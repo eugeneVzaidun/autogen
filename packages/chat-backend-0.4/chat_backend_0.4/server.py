@@ -3,7 +3,6 @@ import traceback
 import tools
 import uvicorn
 
-from dataclasses import dataclass
 from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import WebSocketDisconnect
@@ -16,17 +15,7 @@ from models import UserTask, UserLogin
 from workflow import initialize_agents
 
 
-@dataclass
-class TextMessage:
-    content: str
-    source: str
-
-
 model_client = OpenAIChatCompletionClient(model="gpt-4o-mini")
-
-
-# Modify UserAgent to send responses back to the user via WebSocket
-
 
 app = FastAPI()
 
