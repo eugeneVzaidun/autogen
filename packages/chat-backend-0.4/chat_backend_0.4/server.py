@@ -21,7 +21,6 @@ from autogen_core.components.models import (
 from autogen_ext.models import OpenAIChatCompletionClient
 
 # Import your custom messages, agents, and tools
-# Assuming these are from your code references:
 from models import UserLogin, UserTask, AgentResponse
 from agents import AIAgent, HumanAgent, UserAgent
 import tools
@@ -44,20 +43,18 @@ class WebSocketUserAgent(UserAgent):
 
     @message_handler
     async def handle_user_login(self, message: UserLogin, ctx: MessageContext) -> None:
-        pass
+        # You can handle user login messages here if you want the agent to send something on login.
+        await self.publish_message(
+            UserTask(context=[UserMessage(content="Hi! Tell me what can you do", source="User")]),
+            topic_id=TopicId(self._agent_topic_type, source=self.id.key),
+        )
 
     @message_handler
     async def handle_task_result(self, message: AgentResponse, ctx: MessageContext) -> None:
-        # The AgentResponse contains context. The last message in the context
-        # is typically the agent's response to the user's query.
-        # We'll send that back to the user via WebSocket.
-        # Extract the latest agent response from context
         if message.context:
-            # Typically, the agent's response is the last item in the context
             response_content = message.context[-1].content
             await self.websocket.send_text(response_content)
         else:
-            # If there's no context, just send a generic message.
             await self.websocket.send_text("No response from the agent.")
 
 
@@ -77,6 +74,10 @@ runtimes = {}
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
+
+    # Send a greeting message to the user when the connection is established
+    # await websocket.send_text("Hello! You are now connected to the chat server. How can I help you today?")
+
     session_id = str(uuid.uuid4())
     runtime = SingleThreadedAgentRuntime()
     runtimes[session_id] = runtime
@@ -137,7 +138,7 @@ async def websocket_endpoint(websocket: WebSocket):
         TypeSubscription(topic_type=tools.human_agent_topic_type, agent_type=human_agent_type.type)
     )
 
-    # Register the user agent. The user agent now uses the WebSocketUserAgent
+    # Register the user agent using the WebSocketUserAgent
     user_agent_type = await WebSocketUserAgent.register(
         runtime,
         type=tools.user_topic_type,
@@ -156,14 +157,10 @@ async def websocket_endpoint(websocket: WebSocket):
     # Create a new session for the user by publishing a UserLogin event
     await runtime.publish_message(UserLogin(), topic_id=TopicId(tools.user_topic_type, source=session_id))
 
-    # The server now listens for user messages via the websocket.
     try:
         while True:
             data = await websocket.receive_text()
-
-            # The user's messages are forwarded to the runtime as UserTasks.
-            # This simulates the user providing new input.
-            # We will publish a UserTask with the user's message context.
+            # The user's messages are published as UserTask events
             await runtime.publish_message(
                 UserTask(context=[UserMessage(content=data, source="User")]),
                 topic_id=TopicId(tools.general_agent_topic_type, source=session_id),
@@ -178,4 +175,5 @@ async def websocket_endpoint(websocket: WebSocket):
 
 
 if __name__ == "__main__":
+    print("Starting server...")
     uvicorn.run(app, host="0.0.0.0", port=8000)

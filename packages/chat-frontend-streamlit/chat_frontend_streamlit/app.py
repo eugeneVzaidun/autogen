@@ -10,7 +10,7 @@ load_dotenv()
 
 # Set the page configuration
 st.set_page_config(
-    page_title="Kruso Event-12 Agentic Expirence",
+    page_title="Kruso Event-12 Agentic Experience",
     page_icon=favicon,
     layout="centered",
 )
@@ -33,6 +33,11 @@ def connect_websocket():
     try:
         st.session_state.ws = connect(base_url)
         st.session_state.ws_connected = True
+
+        # Immediately receive the initial greeting message from the server
+        initial_message = st.session_state.ws.recv()
+        st.session_state.messages.append({"type": "assistant", "content": initial_message})
+
     except Exception as e:
         st.error(f"❌ Error connecting to WebSocket: {e}")
         st.session_state.ws_connected = False
@@ -41,7 +46,7 @@ def connect_websocket():
 # Connect to WebSocket on page load
 connect_websocket()
 
-# Display chat messages
+# Display all chat messages
 for msg in st.session_state.messages:
     with st.chat_message(msg["type"]):
         st.markdown(msg["content"])
