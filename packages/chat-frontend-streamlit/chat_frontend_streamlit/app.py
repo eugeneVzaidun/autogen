@@ -46,12 +46,6 @@ def connect_websocket():
 # Connect to WebSocket on page load
 connect_websocket()
 
-# Display a disconnect button if connected
-if st.session_state.ws_connected and st.button("Disconnect"):
-    st.session_state.ws.close()
-    st.session_state.ws_connected = False
-    st.success("Disconnected from server.")
-
 # Display all chat messages
 for msg in st.session_state.messages:
     with st.chat_message(msg["type"]):

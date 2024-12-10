@@ -5,7 +5,7 @@ from autogen_core import SingleThreadedAgentRuntime, TypeSubscription
 from agents import AIAgent, HumanAgent, WebSocketUserAgent
 import prompts
 
-model_client = OpenAIChatCompletionClient(model="gpt-4o-mini")
+model_client = OpenAIChatCompletionClient(model="gpt-4o")
 
 
 async def initialize_agents(runtime: SingleThreadedAgentRuntime, session_id: str, websocket: WebSocket):
