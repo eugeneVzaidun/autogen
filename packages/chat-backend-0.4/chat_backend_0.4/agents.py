@@ -1,6 +1,6 @@
 import json
 from typing import List, Tuple
-
+from fastapi import WebSocket
 from autogen_core import (
     FunctionCall,
     MessageContext,
@@ -19,7 +19,6 @@ from autogen_core.components.models import (
 from autogen_core.components.tools import Tool
 
 from models import UserTask, AgentResponse, UserLogin
-from websockets import WebSocket
 
 
 class AIAgent(RoutedAgent):

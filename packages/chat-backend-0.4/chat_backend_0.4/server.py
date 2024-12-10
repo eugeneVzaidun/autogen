@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
-from fastapi.websockets import WebSocketDisconnect
+from fastapi import WebSocketDisconnect
 
 from autogen_core import (
     SingleThreadedAgentRuntime,

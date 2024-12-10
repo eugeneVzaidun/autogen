@@ -1,14 +1,15 @@
 from autogen_ext.models import OpenAIChatCompletionClient
 from autogen_core import SingleThreadedAgentRuntime, TypeSubscription, TopicId
 from autogen_core.components.models import SystemMessage
-from agents import AIAgent, HumanAgent
+from agents import AIAgent, HumanAgent, WebSocketUserAgent
 import tools
 from models import UserLogin
+from fastapi import WebSocket
 
 model_client = OpenAIChatCompletionClient(model="gpt-4o-mini")
 
 
-async def initialize_agents(runtime: SingleThreadedAgentRuntime, session_id: str, websocket):
+async def initialize_agents(runtime: SingleThreadedAgentRuntime, session_id: str, websocket: WebSocket):
     # Register the general agent
     general_agent_type = await AIAgent.register(
         runtime,
