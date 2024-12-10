@@ -77,6 +77,3 @@ async def initialize_agents(runtime: SingleThreadedAgentRuntime, session_id: str
         ),
     )
     await runtime.add_subscription(TypeSubscription(topic_type=tools.user_topic_type, agent_type=user_agent_type.type))
-
-    # Publish initial UserLogin message
-    await runtime.publish_message(UserLogin(), topic_id=TopicId(tools.user_topic_type, source=session_id))

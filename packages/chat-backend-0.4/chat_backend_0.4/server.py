@@ -1,25 +1,19 @@
 import uuid
 import traceback
-from dataclasses import dataclass
+import tools
+import uvicorn
 
+from dataclasses import dataclass
 from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
-import uvicorn
 from fastapi import WebSocketDisconnect
-
-from autogen_core import (
-    SingleThreadedAgentRuntime,
-    TopicId,
-)
-
-from autogen_core.components.models import (
-    UserMessage,
-)
 from autogen_ext.models import OpenAIChatCompletionClient
+from autogen_core import SingleThreadedAgentRuntime, TopicId
+from autogen_core.components.models import UserMessage
+from models import UserTask, UserLogin
 
-from models import UserTask
-import tools
-from workflow import initialize_agents  # Import the initialization function
+# Import the initialization function
+from workflow import initialize_agents
 
 
 @dataclass
@@ -60,6 +54,9 @@ async def websocket_endpoint(websocket: WebSocket):
 
     # Start the runtime
     runtime.start()
+
+    # Publish initial UserLogin message
+    await runtime.publish_message(UserLogin(), topic_id=TopicId(tools.user_topic_type, source=session_id))
 
     try:
         while True:
