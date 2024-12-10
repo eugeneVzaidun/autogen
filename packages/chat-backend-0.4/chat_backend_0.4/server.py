@@ -15,7 +15,7 @@ from models import UserTask, UserLogin
 from workflow import initialize_agents
 
 
-model_client = OpenAIChatCompletionClient(model="gpt-4o-mini")
+model_client = OpenAIChatCompletionClient(model="gpt-4o")
 
 app = FastAPI()
 
