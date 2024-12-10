@@ -8,7 +8,7 @@ from autogen_core import (
     TopicId,
     message_handler,
 )
-from autogen_core.components.models import (
+from autogen_core.models import (
     AssistantMessage,
     ChatCompletionClient,
     FunctionExecutionResult,
@@ -16,7 +16,7 @@ from autogen_core.components.models import (
     SystemMessage,
     UserMessage,
 )
-from autogen_core.components.tools import Tool
+from autogen_core.tools import Tool
 
 from models import UserTask, AgentResponse, UserLogin
 

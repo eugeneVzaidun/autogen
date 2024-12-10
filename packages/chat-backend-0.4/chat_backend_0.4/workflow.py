@@ -1,6 +1,6 @@
 import tools
 from fastapi import WebSocket
-from autogen_ext.models import OpenAIChatCompletionClient
+from autogen_ext.models.openai import OpenAIChatCompletionClient
 from autogen_core import SingleThreadedAgentRuntime, TypeSubscription
 from agents import AIAgent, HumanAgent, WebSocketUserAgent
 import prompts

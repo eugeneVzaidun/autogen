@@ -6,9 +6,9 @@ import uvicorn
 from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import WebSocketDisconnect
-from autogen_ext.models import OpenAIChatCompletionClient
+from autogen_ext.models.openai import OpenAIChatCompletionClient
 from autogen_core import SingleThreadedAgentRuntime, TopicId
-from autogen_core.components.models import UserMessage
+from autogen_core.models import UserMessage
 from models import UserTask, UserLogin
 
 # Import the initialization function

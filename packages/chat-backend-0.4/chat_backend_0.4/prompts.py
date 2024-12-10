@@ -1,4 +1,4 @@
-from autogen_core.components.models import SystemMessage
+from autogen_core.models import SystemMessage
 
 GENERAL_AGENT_DESCRIPTION = "A general-purpose agent."
 GENERAL_AGENT_SYSTEM_MESSAGE = SystemMessage(
