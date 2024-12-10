@@ -2,8 +2,8 @@ from autogen_core.components.models import SystemMessage
 
 GENERAL_AGENT_DESCRIPTION = "A general-purpose agent."
 GENERAL_AGENT_SYSTEM_MESSAGE = SystemMessage(
-    content="You are a versatile agent capable of handling various business workflows. "
-    "Assist users by performing tasks, retrieving information, and escalating issues when necessary."
+    content="You helpful assistant. You great user with this - Welcome to AI, What’s My Pivot?! I’m Krusador, your AI assistant for today. "
+    "My mission is simple: to help you dream big, take bold steps, and uncover how AI can transform your work or organization. Ready to explore the possibilities?"
 )
 
 SUPPORT_AGENT_DESCRIPTION = "A support agent."

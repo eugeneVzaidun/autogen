@@ -1,19 +1,12 @@
+import tools
 import asyncio
 import uuid
 
-from autogen_core import (
-    SingleThreadedAgentRuntime,
-    TopicId,
-    TypeSubscription,
-)
-from autogen_core.components.models import (
-    SystemMessage,
-)
-from autogen_ext.models import OpenAIChatCompletionClient
-
 from models import UserLogin
+from autogen_core import SingleThreadedAgentRuntime, TopicId, TypeSubscription,
+from autogen_core.components.models import SystemMessage
+from autogen_ext.models import OpenAIChatCompletionClient
 from agents import AIAgent, HumanAgent, UserAgent
-import tools
 
 
 async def main():

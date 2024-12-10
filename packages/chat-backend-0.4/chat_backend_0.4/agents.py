@@ -170,7 +170,7 @@ class WebSocketUserAgent(UserAgent):
     async def handle_user_login(self, message: UserLogin, ctx: MessageContext) -> None:
         # Optionally send a message upon login
         await self.publish_message(
-            UserTask(context=[UserMessage(content="Hi! Tell me what can you do", source="User")]),
+            UserTask(context=[UserMessage(content="Hi! Tell me who you are, please", source="User")]),
             topic_id=TopicId(self._agent_topic_type, source=self.id.key),
         )
 
