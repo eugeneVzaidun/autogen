@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
+from fastapi.websockets import WebSocketDisconnect
 
 from autogen_core import (
     SingleThreadedAgentRuntime,
@@ -20,7 +21,6 @@ from autogen_core.components.models import (
 )
 from autogen_ext.models import OpenAIChatCompletionClient
 
-# Import your custom messages, agents, and tools
 from models import UserLogin, UserTask, AgentResponse
 from agents import AIAgent, HumanAgent, UserAgent
 import tools
@@ -43,7 +43,7 @@ class WebSocketUserAgent(UserAgent):
 
     @message_handler
     async def handle_user_login(self, message: UserLogin, ctx: MessageContext) -> None:
-        # You can handle user login messages here if you want the agent to send something on login.
+        # Optionally send a message upon login
         await self.publish_message(
             UserTask(context=[UserMessage(content="Hi! Tell me what can you do", source="User")]),
             topic_id=TopicId(self._agent_topic_type, source=self.id.key),
@@ -75,15 +75,11 @@ runtimes = {}
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
 
-    # Send a greeting message to the user when the connection is established
-    # await websocket.send_text("Hello! You are now connected to the chat server. How can I help you today?")
-
     session_id = str(uuid.uuid4())
     runtime = SingleThreadedAgentRuntime()
     runtimes[session_id] = runtime
 
-    # Register agents
-    # Register the general agent.
+    # Register the general agent
     general_agent_type = await AIAgent.register(
         runtime,
         type=tools.general_agent_topic_type,
@@ -104,7 +100,7 @@ async def websocket_endpoint(websocket: WebSocket):
         TypeSubscription(topic_type=tools.general_agent_topic_type, agent_type=general_agent_type.type)
     )
 
-    # Register the support agent.
+    # Register the support agent
     support_agent_type = await AIAgent.register(
         runtime,
         type=tools.support_agent_topic_type,
@@ -124,7 +120,7 @@ async def websocket_endpoint(websocket: WebSocket):
         TypeSubscription(topic_type=tools.support_agent_topic_type, agent_type=support_agent_type.type)
     )
 
-    # Register the human agent.
+    # Register the human agent
     human_agent_type = await HumanAgent.register(
         runtime,
         type=tools.human_agent_topic_type,
@@ -151,24 +147,28 @@ async def websocket_endpoint(websocket: WebSocket):
     )
     await runtime.add_subscription(TypeSubscription(topic_type=tools.user_topic_type, agent_type=user_agent_type.type))
 
-    # Start the runtime.
+    # Start the runtime
     runtime.start()
 
-    # Create a new session for the user by publishing a UserLogin event
+    # Create a new session for the user
     await runtime.publish_message(UserLogin(), topic_id=TopicId(tools.user_topic_type, source=session_id))
 
     try:
         while True:
-            data = await websocket.receive_text()
-            # The user's messages are published as UserTask events
-            await runtime.publish_message(
-                UserTask(context=[UserMessage(content=data, source="User")]),
-                topic_id=TopicId(tools.general_agent_topic_type, source=session_id),
-            )
-
-    except Exception as e:
-        traceback.print_exc()
-        print(f"Connection closed: {e}")
+            try:
+                data = await websocket.receive_text()
+                # The user's messages are published as UserTask events
+                await runtime.publish_message(
+                    UserTask(context=[UserMessage(content=data, source="User")]),
+                    topic_id=TopicId(tools.general_agent_topic_type, source=session_id),
+                )
+            except WebSocketDisconnect:
+                print(f"Client {session_id} disconnected.")
+                break
+            except Exception as e:
+                traceback.print_exc()
+                print(f"Connection error for {session_id}: {e}")
+                break
     finally:
         await runtime.stop()
         del runtimes[session_id]

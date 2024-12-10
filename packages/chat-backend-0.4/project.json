@@ -69,8 +69,8 @@
     "run:server": {
       "executor": "@nxlv/python:run-commands",
       "options": {
-        "command": "poetry run python chat_backend_0.4/server.py",
-        "cwd": "packages/chat-backend-0.4"
+        "command": "poetry run uvicorn server:app --reload",
+        "cwd": "packages/chat-backend-0.4/chat_backend_0.4"
       }
     },
     "run:debug": {

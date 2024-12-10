@@ -10,12 +10,12 @@ load_dotenv()
 
 # Set the page configuration
 st.set_page_config(
-    page_title="Kruso Event-12 Agentic Experience",
+    page_title="Agentic Experience",
     page_icon=favicon,
     layout="centered",
 )
 
-st.markdown("<h1 style='font-size: 36px;'>💬 Kruso Event - 12 (Agentic Game)</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='font-size: 22px;'>💬 Kruso Event - 12 (Agentic Game)</h1>", unsafe_allow_html=True)
 
 # Initialize messages and websocket state
 if "messages" not in st.session_state:
@@ -34,7 +34,7 @@ def connect_websocket():
         st.session_state.ws = connect(base_url)
         st.session_state.ws_connected = True
 
-        # Immediately receive the initial greeting message from the server
+        # Now that the server sends a greeting, we can safely recv.
         initial_message = st.session_state.ws.recv()
         st.session_state.messages.append({"type": "assistant", "content": initial_message})
 
