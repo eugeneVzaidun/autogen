@@ -19,6 +19,7 @@ from autogen_core.components.models import (
 from autogen_core.components.tools import Tool
 
 from models import UserTask, AgentResponse, UserLogin
+from websockets import WebSocket
 
 
 class AIAgent(RoutedAgent):
@@ -159,3 +160,25 @@ class UserAgent(RoutedAgent):
         await self.publish_message(
             UserTask(context=message.context), topic_id=TopicId(message.reply_to_topic_type, source=self.id.key)
         )
+
+
+class WebSocketUserAgent(UserAgent):
+    def __init__(self, description: str, user_topic_type: str, agent_topic_type: str, websocket: WebSocket) -> None:
+        super().__init__(description, user_topic_type, agent_topic_type)
+        self.websocket = websocket
+
+    @message_handler
+    async def handle_user_login(self, message: UserLogin, ctx: MessageContext) -> None:
+        # Optionally send a message upon login
+        await self.publish_message(
+            UserTask(context=[UserMessage(content="Hi! Tell me what can you do", source="User")]),
+            topic_id=TopicId(self._agent_topic_type, source=self.id.key),
+        )
+
+    @message_handler
+    async def handle_task_result(self, message: AgentResponse, ctx: MessageContext) -> None:
+        if message.context:
+            response_content = message.context[-1].content
+            await self.websocket.send_text(response_content)
+        else:
+            await self.websocket.send_text("No response from the agent.")

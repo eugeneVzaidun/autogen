@@ -34,7 +34,7 @@ def connect_websocket():
         st.session_state.ws = connect(base_url)
         st.session_state.ws_connected = True
 
-        # Now that the server sends a greeting, we can safely recv.
+        # Immediately receive the initial greeting message from the server
         initial_message = st.session_state.ws.recv()
         st.session_state.messages.append({"type": "assistant", "content": initial_message})
 
@@ -45,6 +45,12 @@ def connect_websocket():
 
 # Connect to WebSocket on page load
 connect_websocket()
+
+# Display a disconnect button if connected
+if st.session_state.ws_connected and st.button("Disconnect"):
+    st.session_state.ws.close()
+    st.session_state.ws_connected = False
+    st.success("Disconnected from server.")
 
 # Display all chat messages
 for msg in st.session_state.messages:
