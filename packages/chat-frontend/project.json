@@ -1,14 +1,14 @@
 {
-  "name": "chat-frontend-streamlit",
+  "name": "chat-frontend",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "sourceRoot": "packages/chat-frontend-streamlit/chat_frontend_streamlit",
+  "sourceRoot": "packages/chat-frontend/chat_frontend",
   "targets": {
     "lock": {
       "executor": "@nxlv/python:run-commands",
       "options": {
         "command": "poetry lock --no-update",
-        "cwd": "packages/chat-frontend-streamlit"
+        "cwd": "packages/chat-frontend"
       }
     },
     "add": {
@@ -27,7 +27,7 @@
       "executor": "@nxlv/python:build",
       "outputs": ["{projectRoot}/dist"],
       "options": {
-        "outputPath": "packages/chat-frontend-streamlit/dist",
+        "outputPath": "packages/chat-frontend/dist",
         "publish": false,
         "lockedVersions": true,
         "bundleLocalDependencies": true
@@ -46,17 +46,17 @@
     "lint": {
       "executor": "@nxlv/python:flake8",
       "outputs": [
-        "{workspaceRoot}/reports/packages/chat-frontend-streamlit/pylint.txt"
+        "{workspaceRoot}/reports/packages/chat-frontend/pylint.txt"
       ],
       "options": {
-        "outputFile": "reports/packages/chat-frontend-streamlit/pylint.txt"
+        "outputFile": "reports/packages/chat-frontend/pylint.txt"
       }
     },
     "run": {
       "executor": "@nxlv/python:run-commands",
       "options": {
-        "command": ".venv/bin/streamlit run chat_frontend_streamlit/app.py --server.fileWatcherType=auto --server.runOnSave=true",
-        "cwd": "packages/chat-frontend-streamlit"
+        "command": ".venv/bin/streamlit run chat_frontend/app.py --server.fileWatcherType=auto --server.runOnSave=true",
+        "cwd": "packages/chat-frontend"
       }
     },
     "container:build": {
@@ -67,7 +67,7 @@
         },
         "aks": {
           "metadata": {
-            "images": ["krusonl.azurecr.io/chat-frontend-streamlit"],
+            "images": ["krusonl.azurecr.io/chat-frontend"],
             "load": true,
             "tags": [
               "type=schedule",
@@ -86,7 +86,7 @@
         "platforms": ["linux/amd64"],
         "push": true,
         "metadata": {
-          "images": ["chat-frontend-streamlit"],
+          "images": ["chat-frontend"],
           "load": true,
           "tags": [
             "type=schedule",
@@ -102,8 +102,8 @@
       "dependsOn": ["container:build"],
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["docker run --env-file .env -p 8501:8501 chat-frontend-streamlit:main"],
-        "cwd": "packages/chat-frontend-streamlit"
+        "commands": ["docker run --env-file .env -p 8501:8501 chat-frontend:main"],
+        "cwd": "packages/chat-frontend"
       }
     }
   },

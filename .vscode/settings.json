@@ -1,7 +1,7 @@
 {
   "python.analysis.extraPaths": [
     "packages/chat-backend/.venv/lib/python3.12/site-packages",
-    "packages/chat-frontend-streamlit/.venv/lib/python3.12/site-packages",
+    "packages/chat-frontend/.venv/lib/python3.12/site-packages",
   ],
   "flake8.args": ["--max-line-length=120"],
   "eslint.validate": ["json"]

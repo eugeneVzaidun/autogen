@@ -16,19 +16,19 @@ USER appuser
 WORKDIR /home/appuser
 
 # Copy the local Streamlit app to the container
-COPY packages/chat-frontend-streamlit/dist/chat_frontend_streamlit-1.0.0.tar.gz /home/appuser/
+COPY packages/chat-frontend/dist/chat_frontend-1.0.0.tar.gz /home/appuser/
 ENV STREAMLIT_SERVER_PORT=${STREAMLIT_SERVER_PORT:-8501}
 # Create a virtual environment and install the app
 ENV VIRTUAL_ENV=/home/appuser/venv
 RUN virtualenv ${VIRTUAL_ENV} \
     && . ${VIRTUAL_ENV}/bin/activate \
-    && pip install /home/appuser/chat_frontend_streamlit-1.0.0.tar.gz \
+    && pip install /home/appuser/chat_frontend-1.0.0.tar.gz \
     && mkdir -p /home/appuser/app \
-    && tar --strip-components=2 -xzf /home/appuser/chat_frontend_streamlit-1.0.0.tar.gz -C /home/appuser
+    && tar --strip-components=2 -xzf /home/appuser/chat_frontend-1.0.0.tar.gz -C /home/appuser
 
 # Expose the default Streamlit port
 EXPOSE ${STREAMLIT_SERVER_PORT}
 
 # Copy the run script
-COPY packages/chat-frontend-streamlit/run.sh /home/appuser
+COPY packages/chat-frontend/run.sh /home/appuser
 ENTRYPOINT ["./run.sh"]
