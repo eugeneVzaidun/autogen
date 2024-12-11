@@ -4,7 +4,7 @@ metadata:
   name: streamlit-deployment
   namespace: event-12
 spec:
-  replicas: 5
+  replicas: 1
   selector:
     matchLabels:
       app: streamlit
