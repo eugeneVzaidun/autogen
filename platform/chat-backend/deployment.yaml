@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: chat-backend-deployment
+  name: chat-backend
   namespace: event-12
 spec:
   replicas: 1

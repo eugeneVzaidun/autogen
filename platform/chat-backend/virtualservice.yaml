@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: chat-backend-virtualservice
+  name: chat-backend
   namespace: event-12
 spec:
   hosts:
@@ -14,6 +14,6 @@ spec:
             prefix: /ws
       route:
         - destination:
-            host: chat-backend-service
+            host: chat-backend
             port:
               number: 80
