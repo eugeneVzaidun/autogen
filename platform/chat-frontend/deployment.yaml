@@ -19,7 +19,7 @@ spec:
           ports:
             - containerPort: 8501
           env:
-          - name: STREAMLIT_SERVER_PORT
-            value: "8501"
-          - name: WEBSOCKET_URL
-            value: "wss://kruso-event-12.lelos.xyz/ws"
+            - name: STREAMLIT_SERVER_PORT
+              value: "8501"
+            - name: WEBSOCKET_URL
+              value: "wss://kruso-event-12.lelos.xyz/ws"

@@ -23,8 +23,8 @@ data:
     - --policy=upsert-only
     - --interval=1m
     - --registry=txt
-    - --txt-owner-id=shypple-dev
-  project-id: bildi-ai-prod
+    - --txt-owner-id=kruso.nl
+  project-id: kruso
   cluster-name: prod
   location: europe-west4-b
   service-account-name: external-dns-secrets

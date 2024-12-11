@@ -18,4 +18,4 @@ spec:
         image: nodered/node-red:latest
         ports:
         - containerPort: 1880
-      resources: {}
+        resources: {}

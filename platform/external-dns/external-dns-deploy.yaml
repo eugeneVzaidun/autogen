@@ -36,7 +36,7 @@ spec:
             - --policy=upsert-only
             - --interval=1m
             - --registry=txt
-            - --txt-owner-id=bildi-ai-prod
+            - --txt-owner-id=kruso.nl
           envFrom:
             - secretRef:
                 name: external-dns # kpt-set: ${secret-name}
