@@ -1,4 +1,4 @@
-from autogen_core.components.tools import FunctionTool
+from autogen_core.components.tools import FunctionToolAlias
 
 general_agent_topic_type = "GeneralAgent"
 support_agent_topic_type = "SupportAgent"
@@ -52,17 +52,17 @@ def escalate_to_human_agent() -> str:
     return "HumanAgent"
 
 
-execute_task_tool = FunctionTool(execute_task, description="Execute a specified task with given parameters.")
-lookup_resource_tool = FunctionTool(lookup_resource, description="Retrieve resource ID based on the search query.")
-process_refund_tool = FunctionTool(process_refund, description="Process a refund for a given resource.")
-delegate_to_general_agent_tool = FunctionTool(
+execute_task_tool = FunctionToolAlias(execute_task, description="Execute a specified task with given parameters.")
+lookup_resource_tool = FunctionToolAlias(lookup_resource, description="Retrieve resource ID based on the search query.")
+process_refund_tool = FunctionToolAlias(process_refund, description="Process a refund for a given resource.")
+delegate_to_general_agent_tool = FunctionToolAlias(
     delegate_to_general_agent, description="Delegate task to a general agent."
 )
-delegate_to_support_agent_tool = FunctionTool(
+delegate_to_support_agent_tool = FunctionToolAlias(
     delegate_to_support_agent, description="Delegate task to a support agent."
 )
-delegate_back_to_escalation_tool = FunctionTool(
+delegate_back_to_escalation_tool = FunctionToolAlias(
     delegate_back_to_escalation,
     description="Delegate task back to escalation agent or another appropriate agent.",
 )
-escalate_to_human_agent_tool = FunctionTool(escalate_to_human_agent, description="Escalate task to a human agent.")
+escalate_to_human_agent_tool = FunctionToolAlias(escalate_to_human_agent, description="Escalate task to a human agent.")

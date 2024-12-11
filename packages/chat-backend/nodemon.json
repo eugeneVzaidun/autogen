@@ -1,5 +1,0 @@
-{
-    "watch": ["chat_backend"],
-    "ext": "py",
-    "exec": "poetry run python chat_backend/main.py"
-}

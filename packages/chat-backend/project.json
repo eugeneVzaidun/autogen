@@ -3,12 +3,6 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "packages/chat-backend/chat_backend",
-  "release": {
-    "version": {
-      "generator": "@nxlv/python:release-version"
-    }
-  },
-  "tags": [],
   "targets": {
     "lock": {
       "executor": "@nxlv/python:run-commands",
@@ -51,33 +45,52 @@
     },
     "lint": {
       "executor": "@nxlv/python:flake8",
-      "outputs": ["{workspaceRoot}/reports/packages/chat-backend/pylint.txt"],
-      "options": {
-        "outputFile": "reports/packages/chat-backend/pylint.txt"
-      }
-    },
-    "test": {
-      "executor": "@nxlv/python:run-commands",
       "outputs": [
-        "{workspaceRoot}/reports/packages/chat-backend/unittests",
-        "{workspaceRoot}/coverage/packages/chat-backend"
+        "{workspaceRoot}/reports/packages/chat-backend/pylint.txt"
       ],
       "options": {
-        "command": "poetry run pytest tests/",
-        "cwd": "packages/chat-backend"
+        "outputFile": "reports/packages/chat-backend/pylint.txt"
       }
     },
     "run": {
       "executor": "@nxlv/python:run-commands",
       "options": {
-        "command": "poetry run python chat_backend/main.py",
+        "command": "poetry run python chat_backend/app.py",
         "cwd": "packages/chat-backend"
       }
     },
-    "run:watch": {
+    "run:log_debugger": {
       "executor": "@nxlv/python:run-commands",
       "options": {
-        "command": "PYDEVD_DISABLE_FILE_VALIDATION=1 npx nodemon --config nodemon.json --exec 'poetry run python -m debugpy --listen 5678 --wait-for-client chat_backend/main.py'",
+        "command": "poetry run python chat_backend/log_debugger.py",
+        "cwd": "packages/chat-backend"
+      }
+    },
+    "run:server": {
+      "executor": "@nxlv/python:run-commands",
+      "options": {
+        "command": "poetry run uvicorn server:app --reload",
+        "cwd": "packages/chat-backend/chat_backend"
+      }
+    },
+    "run:debug": {
+      "executor": "@nxlv/python:run-commands",
+      "options": {
+        "command": "PYDEVD_DISABLE_FILE_VALIDATION=1 poetry run python -m debugpy --listen 5678 --wait-for-client chat_backend/app.py",
+        "cwd": "packages/chat-backend"
+      }
+    },
+    "run:agent_runtime": {
+      "executor": "@nxlv/python:run-commands",
+      "options": {
+        "command": "poetry run python chat_backend/agent_runtime.py",
+        "cwd": "packages/chat-backend"
+      }
+    },
+    "run:agent_runtime_host": {
+      "executor": "@nxlv/python:run-commands",
+      "options": {
+        "command": "poetry run python chat_backend/agent_runtime_host.py",
         "cwd": "packages/chat-backend"
       }
     },
@@ -124,6 +137,12 @@
         "commands": ["docker run --env-file .env -p 8000:8000 chat-backend:main"],
         "cwd": "packages/chat-backend/chat_backend"
       }
+    }
+  },
+  "tags": [],
+  "release": {
+    "version": {
+      "generator": "@nxlv/python:release-version"
     }
   }
 }

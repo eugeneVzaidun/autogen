@@ -1,7 +1,6 @@
 {
   "python.analysis.extraPaths": [
-    "packages/chat_backend/.venv/lib/python3.12/site-packages",
-    "packages/chat-backend-0.4/.venv/lib/python3.12/site-packages",
+    "packages/chat-backend/.venv/lib/python3.12/site-packages",
     "packages/chat-frontend-streamlit/.venv/lib/python3.12/site-packages",
   ],
   "flake8.args": ["--max-line-length=120"],
