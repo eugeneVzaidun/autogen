@@ -3,7 +3,7 @@ import traceback
 import tools
 import uvicorn
 
-from fastapi import FastAPI, WebSocket
+from fastapi import FastAPI, WebSocket, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import WebSocketDisconnect
 from autogen_ext.models.openai import OpenAIChatCompletionClient
@@ -26,6 +26,16 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+router = APIRouter()
+
+
+@router.get("/heartbeat")
+async def heartbeat():
+    return {"status": "ok"}
+
+
+app.include_router(router)
 
 runtimes = {}
 

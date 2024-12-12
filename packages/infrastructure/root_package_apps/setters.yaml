@@ -6,5 +6,5 @@ metadata: # kpt-merge: /database-fake-setters
     config.kubernetes.io/local-config: 'true'
     internal.kpt.dev/upstream-identifier: '|ConfigMap|default|database-fake-setters'
 data:
-  frontend.image: krusonl.azurecr.io/chat-frontend:sha-c4e1dbf
-  backend.image: krusonl.azurecr.io/chat-backend:sha-c4e1dbf
+  frontend.image: krusonl.azurecr.io/chat-frontend:main
+  backend.image: krusonl.azurecr.io/chat-backend:sha-787fe12

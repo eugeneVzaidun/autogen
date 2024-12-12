@@ -14,12 +14,12 @@ spec:
     spec:
       containers:
         - name: chat-frontend
-          image: krusonl.azurecr.io/chat-frontend:sha-c4e1dbf # kpt-set: ${frontend.image}
+          image: krusonl.azurecr.io/chat-frontend:main # kpt-set: ${frontend.image}
           ports:
             - containerPort: 8501
           env:
             - name: STREAMLIT_SERVER_PORT
               value: "8501"
             - name: WEBSOCKET_URL
-              value: "ws://10.15.224.190/ws"
+              value: "ws://10.16.11.55/ws"
           resources: {}

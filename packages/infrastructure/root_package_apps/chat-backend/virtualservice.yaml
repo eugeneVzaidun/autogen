@@ -11,6 +11,8 @@ spec:
     - match:
         - uri:
             prefix: /ws
+        - uri:
+            prefix: /heartbeat
       route:
         - destination:
             host: chat-backend
